@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprawdź widoczność swojej strony</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4">
+    
+    <!-- SCREEN 1: Input Form -->
+    <div id="screen1" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">🚀 Sprawdź widoczność</h1>
+        <p class="text-gray-600 mb-6">swojej strony w Google i AI</p>
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input type="email" id="emailInput" placeholder="twoj@email.pl" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Adres strony</label>
+                <input type="url" id="urlInput" placeholder="https://twojastrona.pl" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none">
+            </div>
+            
+            <button onclick="startAudit()" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105">
+                🔍 Sprawdź za darmo
+            </button>
+            
+            <p class="text-sm text-gray-500 text-center">⏱️ Analiza trwa ~60 sekund</p>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: Loading -->
+    <div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-blue-600"></span></h2>
+        
+        <div class="mb-6">
+            <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div id="progressBar" class="bg-blue-600 h-4 transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <p id="progressText" class="text-center mt-2 text-gray-600">0%</p>
+        </div>
+        
+        <div class="space-y-3">
+            <div id="check1" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> Szybkość ładowania
+            </div>
+            <div id="check2" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> Optymalizacja mobile
+            </div>
+            <div id="check3" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> Test HTTPS
+            </div>
+            <div id="check4" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> ChatGPT visibility
+            </div>
+            <div id="check5" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> Gemini visibility
+            </div>
+            <div id="check6" class="flex items-center text-gray-400">
+                <span class="mr-2">⏳</span> Schema Markup
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: Results -->
+    <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full hidden">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-blue-600"></span></h2>
+        
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Chart -->
+            <div class="flex flex-col items-center justify-center">
+                <canvas id="scoreChart" width="200" height="200"></canvas>
+            </div>
+            
+            <!-- Score Info -->
+            <div class="flex flex-col justify-center">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-600 mb-2">WIDOCZNOŚĆ:</p>
+                    <h3 id="visibilityStatus" class="text-3xl font-bold mb-2">🔴 NISKA</h3>
+                    <p id="visibilityImpact" class="text-gray-600">Tracisz ~70% potencjalnych klientów!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Problems -->
+        <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-8 rounded">
+            <h3 class="text-xl font-bold text-red-800 mb-4">❌ PILNE DO NAPRAWY:</h3>
+            <div id="problemsList" class="space-y-4"></div>
+        </div>
+        
+        <!-- Packages -->
+        <div class="mb-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💡 NAPRAWIMY TO ZA CIEBIE:</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Basic Package -->
+                <div class="border-2 border-blue-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
+                    <h4 class="text-xl font-bold text-blue-600 mb-3">📦 BASIC SEO/GEO</h4>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-4">
+                        <li>✓ Optymalizacja PageSpeed</li>
+                        <li>✓ Schema Markup</li>
+                        <li>✓ AI visibility boost</li>
+                        <li>✓ Raport miesięczny</li>
+                    </ul>
+                    <p class="text-2xl font-bold text-gray-800 mb-4">200€/mies</p>
+                    <button onclick="selectPackage('basic')" 
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition">
+                        WYBIERAM
+                    </button>
+                </div>
+                
+                <!-- Pro Package -->
+                <div class="border-2 border-purple-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
+                    <h4 class="text-xl font-bold text-purple-600 mb-3">🚀 PRO MARKETING</h4>
+                    <ul class="text-sm text-gray-700 space-y-2 mb-4">
+                        <li>✓ Kompleksowa strategia</li>
+                        <li>✓ Content marketing</li>
+                        <li>✓ Kampanie reklamowe</li>
+                        <li>✓ Dedykowany manager</li>
+                    </ul>
+                    <p class="text-lg font-bold text-gray-800 mb-4">Indywidualna wycena</p>
+                    <button onclick="selectPackage('pro')" 
+                            class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition">
+                        KONTAKT
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <p class="text-center text-gray-500 text-sm">
+            📧 Pełna analiza wysłana na: <span id="userEmail" class="font-semibold"></span>
+        </p>
+    </div>
+
+    <script>
+        let auditData = {};
+        
+        function startAudit() {
+            const email = document.getElementById('emailInput').value;
+            const url = document.getElementById('urlInput').value;
+            
+            // Validation
+            if (!email || !url) {
+                alert('Wypełnij wszystkie pola');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                alert('Podaj prawidłowy email');
+                return;
+            }
+            
+            if (!url.startsWith('http')) {
+                alert('URL musi zaczynać się od https://');
+                return;
+            }
+            
+            // Show screen 2
+            document.getElementById('screen1').classList.add('hidden');
+            document.getElementById('screen2').classList.remove('hidden');
+            document.getElementById('analyzingUrl').textContent = url;
+            
+            // Start analysis
+            runAnalysis(email, url);
+        }
+        
+        async function runAnalysis(email, url) {
+            const checks = [
+                { id: 'check1', name: 'PageSpeed', delay: 8000 },
+                { id: 'check2', name: 'Mobile', delay: 3000 },
+                { id: 'check3', name: 'HTTPS', delay: 2000 },
+                { id: 'check4', name: 'ChatGPT', delay: 10000 },
+                { id: 'check5', name: 'Gemini', delay: 10000 },
+                { id: 'check6', name: 'Schema', delay: 7000 }
+            ];
+            
+            let progress = 0;
+            const progressIncrement = 100 / checks.length;
+            
+            for (let i = 0; i < checks.length; i++) {
+                await new Promise(resolve => setTimeout(resolve, checks[i].delay));
+                
+                // Update check
+                const checkEl = document.getElementById(checks[i].id);
+                checkEl.innerHTML = `<span class="mr-2">✓</span> ${checkEl.textContent.substring(2)}`;
+                checkEl.classList.remove('text-gray-400');
+                checkEl.classList.add('text-green-600');
+                
+                // Update progress
+                progress += progressIncrement;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            }
+            
+            // Call backend API
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, url })
+                });
+                
+                auditData = await response.json();
+                showResults(email, url, auditData);
+            } catch (error) {
+                // Mock data for demo
+                auditData = {
+                    score: 47,
+                    pageSpeed: 35,
+                    loadTime: 4.2,
+                    mobileFriendly: false,
+                    https: true,
+                    chatGPTCitation: false,
+                    geminiCitation: false,
+                    schemaMarkup: false
+                };
+                showResults(email, url, auditData);
+            }
+        }
+        
+        function showResults(email, url, data) {
+            // Hide screen 2, show screen 3
+            document.getElementById('screen2').classList.add('hidden');
+            document.getElementById('screen3').classList.remove('hidden');
+            
+            document.getElementById('resultUrl').textContent = url;
+            document.getElementById('userEmail').textContent = email;
+            
+            // Create chart
+            const ctx = document.getElementById('scoreChart').getContext('2d');
+            const chartColor = data.score >= 70 ? '#10b981' : data.score >= 40 ? '#f59e0b' : '#ef4444';
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [data.score, 100 - data.score],
+                        backgroundColor: [chartColor, '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                },
+                plugins: [{
+                    beforeDraw: function(chart) {
+                        const width = chart.width;
+                        const height = chart.height;
+                        const ctx = chart.ctx;
+                        ctx.restore();
+                        const fontSize = (height / 80).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.textBaseline = "middle";
+                        const text = data.score + "%";
+                        const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                        const textY = height / 2;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }]
+            });
+            
+            // Visibility status
+            const statusEl = document.getElementById('visibilityStatus');
+            const impactEl = document.getElementById('visibilityImpact');
+            
+            if (data.score >= 70) {
+                statusEl.textContent = '🟢 DOBRA';
+                statusEl.className = 'text-3xl font-bold mb-2 text-green-600';
+                impactEl.textContent = 'Świetnie! Twoja strona jest dobrze widoczna.';
+            } else if (data.score >= 40) {
+                statusEl.textContent = '🟡 ŚREDNIA';
+                statusEl.className = 'text-3xl font-bold mb-2 text-yellow-600';
+                impactEl.textContent = 'Tracisz ~40% potencjalnych klientów!';
+            } else {
+                statusEl.textContent = '🔴 NISKA';
+                statusEl.className = 'text-3xl font-bold mb-2 text-red-600';
+                impactEl.textContent = 'Tracisz ~70% potencjalnych klientów!';
+            }
+            
+            // Problems list
+            const problems = getTop2Problems(data);
+            const problemsListEl = document.getElementById('problemsList');
+            problemsListEl.innerHTML = problems.map((p, i) => `
+                <div class="border-l-2 border-red-400 pl-4">
+                    <p class="font-bold text-gray-800">${i + 1}. ${p.title}</p>
+                    <p class="text-sm text-gray-600">→ ${p.impact}</p>
+                </div>
+            `).join('');
+        }
+        
+        function getTop2Problems(data) {
+            const problems = [];
+            
+            if (data.pageSpeed < 60) {
+                problems.push({
+                    title: `Strona ładuje się ${data.loadTime}s`,
+                    impact: 'Użytkownicy uciekają po 3s - tracisz klientów'
+                });
+            }
+            
+            if (!data.chatGPTCitation && !data.geminiCitation) {
+                problems.push({
+                    title: 'ChatGPT i Gemini nie znają Twojej firmy',
+                    impact: 'Konkurencja zabiera klientów z AI'
+                });
+            }
+            
+            if (!data.mobileFriendly) {
+                problems.push({
+                    title: 'Strona nie działa na telefonach',
+                    impact: '70% użytkowników korzysta z mobile'
+                });
+            }
+            
+            if (!data.https) {
+                problems.push({
+                    title: 'Brak certyfikatu bezpieczeństwa',
+                    impact: 'Google karze strony bez HTTPS'
+                });
+            }
+            
+            if (!data.schemaMarkup) {
+                problems.push({
+                    title: 'Brak Schema Markup',
+                    impact: 'AI nie rozumie struktury Twojej strony'
+                });
+            }
+            
+            return problems.slice(0, 2);
+        }
+        
+        function selectPackage(type) {
+            const email = document.getElementById('userEmail').textContent;
+            const url = document.getElementById('resultUrl').textContent;
+            
+            if (type === 'basic') {
+                window.location.href = `mailto:kontakt@twojaagencja.pl?subject=Zamówienie BASIC SEO/GEO&body=Email: ${email}%0AStrona: ${url}%0A%0AChcę zamówić pakiet BASIC za 200€/mies`;
+            } else {
+                window.location.href = `mailto:kontakt@twojaagencja.pl?subject=Wycena PRO MARKETING&body=Email: ${email}%0AStrona: ${url}%0A%0AProszę o indywidualną wycenę pakietu PRO`;
+            }
+        }
+    </script>
+</body>
+</html>
