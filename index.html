@@ -15,37 +15,37 @@
         <p class="text-gray-600 mb-6">swojej strony w Google i chat'ach AI</p>
         
         <div class="space-y-4">
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2 text-left">E-mail</label>
-        <input type="email" id="emailInput" placeholder="twoj@email.pl" 
-        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
-
-    </div>
-    
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2 text-left">Adres strony</label>
-        <input type="url" id="urlInput" placeholder="https://twojastrona.pl" 
-        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
-
-    </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2 text-left">E-mail</label>
+                <input type="email" id="emailInput" placeholder="twoj@email.pl" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2 text-left">Adres strony</label>
+                <input type="url" id="urlInput" placeholder="https://twojastrona.pl" 
+                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+            </div>
             
             <button onclick="startAudit()" 
-        class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105 mt-6 shadow-lg">
+                    class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105 mt-6 shadow-lg">
+                🔍 Sprawdź za darmo
             </button>
             
-           <div class="mt-6 space-y-2">
-    <p class="text-sm text-gray-500 text-center">⏱️ Analiza trwa ~60 sekund</p>
-    <div class="flex justify-center gap-6 flex-wrap">
-        <p class="text-sm text-gray-500">✓ Bez logowania</p>
-        <p class="text-sm text-gray-500">✓ Bez formalności</p>
-        <p class="text-sm text-gray-500">✓ Dane bezpieczne</p>
-    </div>
-</div>
+            <div class="mt-6 space-y-2">
+                <p class="text-sm text-gray-500 text-center">⏱️ Analiza trwa ~60 sekund</p>
+                <div class="flex justify-center gap-6 flex-wrap">
+                    <p class="text-sm text-gray-500">✓ Bez logowania</p>
+                    <p class="text-sm text-gray-500">✓ Bez formalności</p>
+                    <p class="text-sm text-gray-500">✓ Dane bezpieczne</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- SCREEN 2: Loading -->
     <div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-blue-600"></span></h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
         
         <div class="mb-6">
             <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -78,7 +78,7 @@
 
     <!-- SCREEN 3: Results -->
     <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full hidden">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-blue-600"></span></h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-purple-600"></span></h2>
         
         <div class="grid md:grid-cols-2 gap-6 mb-8">
             <!-- Chart -->
@@ -107,8 +107,8 @@
             <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💡 NAPRAWIMY TO ZA CIEBIE:</h3>
             <div class="grid md:grid-cols-2 gap-4">
                 <!-- Basic Package -->
-                <div class="border-2 border-blue-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-bold text-blue-600 mb-3">📦 BASIC SEO/GEO</h4>
+                <div class="border-2 border-purple-500 rounded-lg p-6 hover:shadow-xl transition duration-200 hover:border-purple-600">
+                    <h4 class="text-xl font-bold text-purple-600 mb-3">📦 BASIC SEO/GEO</h4>
                     <ul class="text-sm text-gray-700 space-y-2 mb-4">
                         <li>✓ Optymalizacja PageSpeed</li>
                         <li>✓ Schema Markup</li>
@@ -117,14 +117,14 @@
                     </ul>
                     <p class="text-2xl font-bold text-gray-800 mb-4">200€/mies</p>
                     <button onclick="selectPackage('basic')" 
-        class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition shadow-lg">                       
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
                         WYBIERAM
                     </button>
                 </div>
                 
                 <!-- Pro Package -->
-                <div class="border-2 border-purple-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
-                    <h4 class="text-xl font-bold text-purple-600 mb-3">🚀 PRO MARKETING</h4>
+                <div class="border-2 border-pink-500 rounded-lg p-6 hover:shadow-xl transition duration-200 hover:border-pink-600">
+                    <h4 class="text-xl font-bold text-pink-600 mb-3">🚀 PRO MARKETING</h4>
                     <ul class="text-sm text-gray-700 space-y-2 mb-4">
                         <li>✓ Kompleksowa strategia</li>
                         <li>✓ Content marketing</li>
@@ -132,13 +132,10 @@
                         <li>✓ Dedykowany manager</li>
                     </ul>
                     <p class="text-lg font-bold text-gray-800 mb-4">Indywidualna wycena</p>
-
                     <button onclick="selectPackage('pro')" 
-        class="w-full bg-gradient-to-r from-pink-600 to-fuchsia-600 hover:from-pink-700 hover:to-fuchsia-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
+                            class="w-full bg-gradient-to-r from-pink-600 to-fuchsia-600 hover:from-pink-700 hover:to-fuchsia-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
                         KONTAKT
                     </button>
-
-                    
                 </div>
             </div>
         </div>
