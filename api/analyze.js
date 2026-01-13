@@ -1,5 +1,55 @@
 // api/analyze.js
+// Rate limiting - ograniczenie do 3 e-maili na jedno IP
+const requestLog = {};
 
+export default async function handler(req, res) {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const { email, url } = req.body;
+
+  // === RATE LIMITING ===
+  const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const now = Date.now();
+  
+  // Czyść stare wpisy (starsze niż 1h)
+  Object.keys(requestLog).forEach(ip => {
+    if (now - requestLog[ip].firstRequest > 3600000) {
+      delete requestLog[ip];
+    }
+  });
+  
+  // Sprawdź limit
+  if (!requestLog[clientIP]) {
+    requestLog[clientIP] = { count: 1, firstRequest: now };
+  } else {
+    requestLog[clientIP].count++;
+    
+    // LIMIT: 3 requesty na godzinę z jednego IP
+    if (requestLog[clientIP].count > 3) {
+      return res.status(429).json({ 
+        error: 'Zbyt wiele prób. Spróbuj za godzinę.' 
+      });
+    }
+  }
+  // === KONIEC RATE LIMITING ===
+
+  // Validation
+  if (!email || !url) {
+    return res.status(400).json({ error: 'Email and URL required' });
+  }
+
+  // 
 export default async function handler(req, res) {
   // CORS - allow from anywhere
   res.setHeader('Access-Control-Allow-Origin', '*');
