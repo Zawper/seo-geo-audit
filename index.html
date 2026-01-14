@@ -31,17 +31,16 @@
        autocomplete="off">
             
             </div>
-           
+           <!-- Honeypot - ukryte dla ludzi, widoczne dla botów -->
+<input type="text" name="website" id="websiteField" 
+       style="position: absolute; left: -9999px;" 
+       tabindex="-1" 
+       autocomplete="off">
             
             <button onclick="startAudit()" 
                     class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105 mt-6 shadow-lg">
                 🔍 Sprawdź za darmo
-                // Honeypot check
-const honeypot = document.getElementById('websiteField').value;
-if (honeypot) {
-    // Bot wypełnił ukryte pole - ignoruj
-    return;
-}
+               
             </button>
             
             <div class="mt-6 space-y-2">
@@ -163,24 +162,31 @@ if (honeypot) {
         function startAudit() {
             const email = document.getElementById('emailInput').value;
             const url = document.getElementById('urlInput').value;
+// Honeypot check - zatrzymaj boty
+    const honeypot = document.getElementById('websiteField').value;
+    if (honeypot) {
+        // Bot wypełnił ukryte pole - ignoruj bez komunikatu
+        console.log('Bot detected');
+        return;
+    }
             
-            // Validation
-            if (!email || !url) {
-                alert('Wypełnij wszystkie pola');
-                return;
-            }
-            
-            if (!email.includes('@')) {
-                alert('Podaj prawidłowy email');
-                return;
-            }
-            
-            if (!url.startsWith('http')) {
-                alert('URL musi zaczynać się od https://');
-                return;
-            }
-            
-            // Show screen 2
+            // Validation z ładnymi modalami
+    if (!email || !url) {
+        showModal('Wypełnij wszystkie pola');
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        showModal('Podaj prawidłowy email');
+        return;
+    }
+    
+    if (!url.startsWith('http')) {
+        showModal('URL musi zaczynać się od https://');
+        return;
+    }
+    
+    // Show screen 2
             document.getElementById('screen1').classList.add('hidden');
             document.getElementById('screen2').classList.remove('hidden');
             document.getElementById('analyzingUrl').textContent = url;
