@@ -1,0 +1,46 @@
+{
+  "name": "seo-geo-audit",
+  "version": "1.0.0",
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  }
+}
+```
+
+**JEŚLI TAK** → Otwórz i sprawdź czy ma `nodemailer`
+
+---
+
+### **KROK 3: Sprawdź zmienne środowiskowe w Vercel**
+
+1. **Vercel** → Twój projekt → **Settings** → **Environment Variables**
+2. Sprawdź czy **WSZYSTKIE 4** są ustawione:
+
+| Variable | Value |
+|----------|-------|
+| `GMAIL_USER` | `pomeloitp@gmail.com` |
+| `GMAIL_APP_PASSWORD` | `abcdefghijklmnop` (16 znaków bez spacji) |
+| `GOOGLE_API_KEY` | `AIza...` |
+| `OPENAI_API_KEY` | `sk-proj-...` |
+| `GEMINI_API_KEY` | `AIza...` |
+
+3. **Jeśli któregoś brakuje → Dodaj**
+4. **Kliknij Save**
+5. **WAŻNE: Redeploy!** (Deployments → ... → Redeploy)
+
+---
+
+### **KROK 4: Test emaila z logu Vercel**
+
+Po redeployu:
+
+1. **Vercel** → Twój projekt → **Functions**
+2. Kliknij `/api/analyze`
+3. Znajdź ostatnie wywołanie
+4. Sprawdź **Logs** - szukaj:
+```
+✅ DOBRY LOG:
+"Email sent successfully to: user@example.com"
+
+❌ ZŁY LOG:
+"Email send error: Error: ..."
