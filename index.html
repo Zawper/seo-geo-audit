@@ -6,255 +6,212 @@
     <title>Sprawdź widoczność swojej strony</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-    /* Dodatkowe animacje */
-    @keyframes spin {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-    
-    .animate-spin {
-        animation: spin 1s linear infinite;
-    }
-    
-    .animate-pulse {
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-    
-    /* Smooth transitions */
-    #screen2 > * {
-        transition: all 0.3s ease;
-    }
-</style>
-    
+    <style>
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .screen-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .screen-container.active {
+            display: flex !important;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-fuchsia-100 min-h-screen p-4 md:p-8">
+<body class="bg-gradient-to-br from-purple-50 via-pink-50 to-fuchsia-100 min-h-screen">
     
     <!-- SCREEN 1: Input Form -->
-    <div id="screen1" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center screen-visible">
-                <div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full screen-hidden">
-                <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full screen-hidden">
-        <h1 class="text-3xl font-bold text-gray-700 mb-2">Sprawdź czy Twoi klienci</h1>
-        <p class="text-gray-600 mb-6">widzą twoją stronę w Google i chat'ach AI</p>
-        
-        <div class="space-y-4">
-            <div>
-
-
-               
-                <label class="block text-sm font-medium text-gray-700 mb-2 text-left">E-mail</label>
-                <input type="email" id="emailInput" placeholder="twoj@email.pl"    
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
-            </div>
+    <div id="screen1" class="screen-container active">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
+            <h1 class="text-3xl font-bold text-gray-700 mb-2">Sprawdź czy Twoi klienci</h1>
+            <p class="text-gray-600 mb-6">widzą twoją stronę w Google i chat'ach AI</p>
             
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2 text-left">Adres strony</label>
-                <input type="url" id="urlInput" placeholder="https://twojastrona.pl" 
-                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
-           
-            
-            </div>
-           <!-- Honeypot - ukryte dla ludzi, widoczne dla botów -->
-            <input type="text" name="website" id="websiteField" 
-                   style="position: absolute; left: -9999px;" 
-                   tabindex="-1" 
-                   autocomplete="off"
-                   value="">
-            
-            <button onclick="startAudit()" 
-                    class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105 mt-6 shadow-lg">
-                🔍 Sprawdź za darmo
-               
-            </button>
-            
-            <div class="mt-6 space-y-2">
-                <p class="text-sm text-gray-500 text-center">⏱️ Analiza trwa ~60 sekund</p>
-                <div class="flex justify-center gap-6 flex-wrap">
-                    <p class="text-sm text-gray-500">✓ Bez logowania</p>
-                    <p class="text-sm text-gray-500">✓ Bez formalności</p>
-                    <p class="text-sm text-gray-500">✓ Dane bezpieczne</p>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 text-left">E-mail</label>
+                    <input type="email" id="emailInput" placeholder="twoj@email.pl"    
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2 text-left">Adres strony</label>
+                    <input type="url" id="urlInput" placeholder="https://twojastrona.pl" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none">
+                </div>
+                
+                <!-- Honeypot -->
+                <input type="text" name="website" id="websiteField" 
+                       style="position: absolute; left: -9999px;" 
+                       tabindex="-1" 
+                       autocomplete="off"
+                       value="">
+                
+                <button onclick="startAudit()" 
+                        class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-lg transition duration-200 transform hover:scale-105 mt-6 shadow-lg">
+                    🔍 Sprawdź za darmo
+                </button>
+                
+                <div class="mt-6 space-y-2">
+                    <p class="text-sm text-gray-500 text-center">⏱️ Analiza trwa ~60 sekund</p>
+                    <div class="flex justify-center gap-6 flex-wrap">
+                        <p class="text-sm text-gray-500">✓ Bez logowania</p>
+                        <p class="text-sm text-gray-500">✓ Bez formalności</p>
+                        <p class="text-sm text-gray-500">✓ Dane bezpieczne</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- SCREEN 2: Loading -->
-<div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden" style="display: none;">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
-    
-    <!-- Spinning loader -->
-    <div class="flex justify-center mb-6">
-        <div class="relative w-32 h-32">
-            <!-- Outer spinning circle -->
-            <div class="absolute inset-0 border-8 border-purple-200 rounded-full"></div>
-            <div class="absolute inset-0 border-8 border-transparent border-t-purple-600 border-r-pink-600 rounded-full animate-spin"></div>
+    <div id="screen2" class="screen-container">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
             
-            <!-- Inner pulsing circle -->
-            <div class="absolute inset-4 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center animate-pulse">
-                <div class="text-3xl">🔍</div>
+            <!-- Spinning loader -->
+            <div class="flex justify-center mb-6">
+                <div class="relative w-32 h-32">
+                    <div class="absolute inset-0 border-8 border-purple-200 rounded-full"></div>
+                    <div class="absolute inset-0 border-8 border-transparent border-t-purple-600 border-r-pink-600 rounded-full animate-spin"></div>
+                    <div class="absolute inset-4 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center animate-pulse">
+                        <div class="text-3xl">🔍</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Progress bar -->
-    <div class="mb-6">
-        <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
-            <div id="progressBar" class="bg-gradient-to-r from-purple-600 to-pink-600 h-4 transition-all duration-500" style="width: 0%"></div>
-        </div>
-        <p id="progressText" class="text-center mt-2 text-gray-600 font-semibold">0%</p>
-        <p id="statusText" class="text-center mt-1 text-sm text-gray-500">Inicjalizacja...</p>
-    </div>
-    
-    <!-- Checklist with animations -->
-    <div class="space-y-3">
-        <div id="check1" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            Szybkość ładowania
-        </div>
-        <div id="check2" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            Optymalizacja mobile
-        </div>
-        <div id="check3" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            Test HTTPS
-        </div>
-        <div id="check4" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            ChatGPT visibility
-        </div>
-        <div id="check5" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            Gemini visibility
-        </div>
-        <div id="check6" class="flex items-center text-gray-400 transition-all duration-300">
-            <span class="mr-3 text-xl">
-                <span class="inline-block animate-spin">⏳</span>
-            </span> 
-            Schema Markup
-        </div>
-    </div>
-    
-    <!-- Fun loading messages -->
-    <div class="mt-6 p-4 bg-purple-50 rounded-lg text-center">
-        <p id="loadingMessage" class="text-sm text-purple-700 italic animate-pulse">
-            💡 Przygotowujemy analizę...
-        </p>
-    </div>
-</div>        
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
-        
-        <div class="mb-6">
-            <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
-                <div id="progressBar" class="bg-gradient-to-r from-purple-600 to-pink-600 h-4 transition-all duration-500" style="width: 0%"></div>
+            
+            <!-- Progress bar -->
+            <div class="mb-6">
+                <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-purple-600 to-pink-600 h-4 transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p id="progressText" class="text-center mt-2 text-gray-600 font-semibold">0%</p>
+                <p id="statusText" class="text-center mt-1 text-sm text-gray-500">Inicjalizacja...</p>
             </div>
-            <p id="progressText" class="text-center mt-2 text-gray-600">0%</p>
-        </div>
-        
-        <div class="space-y-3">
-            <div id="check1" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> Szybkość ładowania
+            
+            <!-- Checklist -->
+            <div class="space-y-3">
+                <div id="check1" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    Szybkość ładowania
+                </div>
+                <div id="check2" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    Optymalizacja mobile
+                </div>
+                <div id="check3" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    Test HTTPS
+                </div>
+                <div id="check4" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    ChatGPT visibility
+                </div>
+                <div id="check5" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    Gemini visibility
+                </div>
+                <div id="check6" class="flex items-center text-gray-400 transition-all duration-300">
+                    <span class="mr-3 text-xl"><span class="inline-block animate-spin">⏳</span></span> 
+                    Schema Markup
+                </div>
             </div>
-            <div id="check2" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> Optymalizacja mobile
-            </div>
-            <div id="check3" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> Test HTTPS
-            </div>
-            <div id="check4" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> ChatGPT visibility
-            </div>
-            <div id="check5" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> Gemini visibility
-            </div>
-            <div id="check6" class="flex items-center text-gray-400">
-                <span class="mr-2">⏳</span> Schema Markup
+            
+            <!-- Fun loading messages -->
+            <div class="mt-6 p-4 bg-purple-50 rounded-lg text-center">
+                <p id="loadingMessage" class="text-sm text-purple-700 italic animate-pulse">
+                    💡 Przygotowujemy analizę...
+                </p>
             </div>
         </div>
     </div>
 
     <!-- SCREEN 3: Results -->
-    <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full hidden" style="display: none;">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-purple-600"></span></h2>
-        
-        <div class="grid md:grid-cols-2 gap-6 mb-8">
-            <!-- Chart -->
-            <div class="flex flex-col items-center justify-center">
-                <canvas id="scoreChart" width="200" height="200"></canvas>
-            </div>
+    <div id="screen3" class="screen-container">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full overflow-y-auto" style="max-height: 90vh;">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-purple-600"></span></h2>
             
-            <!-- Score Info -->
-            <div class="flex flex-col justify-center">
-                <div class="text-center md:text-left">
-                    <p class="text-gray-600 mb-2">WIDOCZNOŚĆ:</p>
-                    <h3 id="visibilityStatus" class="text-3xl font-bold mb-2">🔴 NISKA</h3>
-                    <p id="visibilityImpact" class="text-gray-600">Tracisz ~70% potencjalnych klientów!</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Problems -->
-        <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-8 rounded">
-            <h3 class="text-xl font-bold text-red-800 mb-4">❌ PILNE DO NAPRAWY:</h3>
-            <div id="problemsList" class="space-y-4"></div>
-        </div>
-        
-        <!-- Packages -->
-        <div class="mb-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💡 NAPRAWIMY TO ZA CIEBIE:</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-                <!-- Basic Package -->
-                <div class="border-2 border-purple-500 rounded-lg p-6 hover:shadow-xl transition duration-200 hover:border-purple-600">
-                    <h4 class="text-xl font-bold text-purple-600 mb-3">📦 BASIC SEO/GEO</h4>
-                    <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                        <li>✓ Optymalizacja PageSpeed</li>
-                        <li>✓ Schema Markup</li>
-                        <li>✓ AI visibility boost</li>
-                        <li>✓ Raport miesięczny</li>
-                    </ul>
-                    <p class="text-2xl font-bold text-gray-800 mb-4">200€/mies</p>
-                    <button onclick="selectPackage('basic')" 
-                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
-                        WYBIERAM
-                    </button>
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="flex flex-col items-center justify-center">
+                    <canvas id="scoreChart" width="200" height="200"></canvas>
                 </div>
                 
-                <!-- Pro Package -->
-                <div class="border-2 border-pink-500 rounded-lg p-6 hover:shadow-xl transition duration-200 hover:border-pink-600">
-                    <h4 class="text-xl font-bold text-pink-600 mb-3">🚀 PRO MARKETING</h4>
-                    <ul class="text-sm text-gray-700 space-y-2 mb-4">
-                        <li>✓ Kompleksowa strategia</li>
-                        <li>✓ Content marketing</li>
-                        <li>✓ Kampanie reklamowe</li>
-                        <li>✓ Dedykowany manager</li>
-                    </ul>
-                    <p class="text-lg font-bold text-gray-800 mb-4">Indywidualna wycena</p>
-                    <button onclick="selectPackage('pro')" 
-                            class="w-full bg-gradient-to-r from-pink-600 to-fuchsia-600 hover:from-pink-700 hover:to-fuchsia-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
-                        KONTAKT
-                    </button>
+                <div class="flex flex-col justify-center">
+                    <div class="text-center md:text-left">
+                        <p class="text-gray-600 mb-2">WIDOCZNOŚĆ:</p>
+                        <h3 id="visibilityStatus" class="text-3xl font-bold mb-2">🔴 NISKA</h3>
+                        <p id="visibilityImpact" class="text-gray-600">Tracisz ~70% potencjalnych klientów!</p>
+                    </div>
                 </div>
             </div>
+            
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-8 rounded">
+                <h3 class="text-xl font-bold text-red-800 mb-4">❌ PILNE DO NAPRAWY:</h3>
+                <div id="problemsList" class="space-y-4"></div>
+            </div>
+            
+            <div class="mb-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💡 NAPRAWIMY TO ZA CIEBIE:</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="border-2 border-purple-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
+                        <h4 class="text-xl font-bold text-purple-600 mb-3">📦 BASIC SEO/GEO</h4>
+                        <ul class="text-sm text-gray-700 space-y-2 mb-4">
+                            <li>✓ Optymalizacja PageSpeed</li>
+                            <li>✓ Schema Markup</li>
+                            <li>✓ AI visibility boost</li>
+                            <li>✓ Raport miesięczny</li>
+                        </ul>
+                        <p class="text-2xl font-bold text-gray-800 mb-4">200€/mies</p>
+                        <button onclick="selectPackage('basic')" 
+                                class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
+                            WYBIERAM
+                        </button>
+                    </div>
+                    
+                    <div class="border-2 border-pink-500 rounded-lg p-6 hover:shadow-xl transition duration-200">
+                        <h4 class="text-xl font-bold text-pink-600 mb-3">🚀 PRO MARKETING</h4>
+                        <ul class="text-sm text-gray-700 space-y-2 mb-4">
+                            <li>✓ Kompleksowa strategia</li>
+                            <li>✓ Content marketing</li>
+                            <li>✓ Kampanie reklamowe</li>
+                            <li>✓ Dedykowany manager</li>
+                        </ul>
+                        <p class="text-lg font-bold text-gray-800 mb-4">Indywidualna wycena</p>
+                        <button onclick="selectPackage('pro')" 
+                                class="w-full bg-gradient-to-r from-pink-600 to-fuchsia-600 hover:from-pink-700 hover:to-fuchsia-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
+                            KONTAKT
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-gray-500 text-sm">
+                📧 Pełna analiza wysłana na: <span id="userEmail" class="font-semibold"></span>
+            </p>
         </div>
-        
-        <p class="text-center text-gray-500 text-sm">
-            📧 Pełna analiza wysłana na: <span id="userEmail" class="font-semibold"></span>
-        </p>
     </div>
 
     <script>
@@ -263,163 +220,128 @@
         function startAudit() {
             const email = document.getElementById('emailInput').value;
             const url = document.getElementById('urlInput').value;
-// Honeypot check - zatrzymaj boty
-    const honeypot = document.getElementById('websiteField').value;
-    if (honeypot) {
-        // Bot wypełnił ukryte pole - ignoruj bez komunikatu
-        console.log('Bot detected');
-        return;
-    }
+            const honeypot = document.getElementById('websiteField').value;
             
-            // Validation z ładnymi modalami
-    if (!email || !url) {
-        showModal('Wypełnij wszystkie pola');
-        return;
-    }
-    
-    if (!email.includes('@')) {
-        showModal('Podaj prawidłowy email');
-        return;
-    }
-    
-    if (!url.startsWith('http')) {
-        showModal('URL musi zaczynać się od https://');
-        return;
-    }
-    
-    // Show screen 2
-            document.getElementById('screen1').classList.add('screen-hidden');
-        document.getElementById('screen2').classList.add('screen-visible');
-        document.getElementById('screen2').classList.remove('screen-hidden');
+            if (honeypot) {
+                console.log('Bot detected');
+                return;
+            }
+            
+            if (!email || !url) {
+                showModal('Wypełnij wszystkie pola');
+                return;
+            }
+            
+            if (!email.includes('@')) {
+                showModal('Podaj prawidłowy email');
+                return;
+            }
+            
+            if (!url.startsWith('http')) {
+                showModal('URL musi zaczynać się od https://');
+                return;
+            }
+            
+            // Przełącz ekrany
+            document.getElementById('screen1').classList.remove('active');
+            document.getElementById('screen2').classList.add('active');
             document.getElementById('analyzingUrl').textContent = url;
             
-            // Start analysis
             runAnalysis(email, url);
         }
         
         async function runAnalysis(email, url) {
-    const checks = [
-        { id: 'check1', name: 'PageSpeed', delay: 8000, message: '🚀 Testuję prędkość ładowania...' },
-        { id: 'check2', name: 'Mobile', delay: 3000, message: '📱 Sprawdzam optymalizację mobile...' },
-        { id: 'check3', name: 'HTTPS', delay: 2000, message: '🔒 Weryfikuję certyfikat SSL...' },
-        { id: 'check4', name: 'ChatGPT', delay: 10000, message: '🤖 Pytam ChatGPT o Twoją stronę...' },
-        { id: 'check5', name: 'Gemini', delay: 10000, message: '✨ Sprawdzam w Gemini AI...' },
-        { id: 'check6', name: 'Schema', delay: 7000, message: '📋 Analizuję strukturę danych...' }
-    ];
-    
-    // Zabawne wiadomości co 5 sekund
-    const funMessages = [
-        '💡 Wiedziałeś, że 53% użytkowników opuszcza stronę jeśli ładuje się dłużej niż 3s?',
-        '🎯 Sprawdzamy czy Google Cię lubi...',
-        '🔍 Przeczesujemy Internet w poszukiwaniu informacji o Tobie...',
-        '⚡ To trwa dłużej, bo robimy to dokładnie!',
-        '🎨 Analizujemy każdy piksel Twojej strony...',
-        '🌟 Prawie gotowe! Przygotowujemy raport...'
-    ];
-    
-    let messageIndex = 0;
-    const messageInterval = setInterval(() => {
-        const messageEl = document.getElementById('loadingMessage');
-        if (messageEl && messageIndex < funMessages.length) {
-            messageEl.textContent = funMessages[messageIndex];
-            messageIndex++;
+            const checks = [
+                { id: 'check1', delay: 8000, message: '🚀 Testuję prędkość ładowania...' },
+                { id: 'check2', delay: 3000, message: '📱 Sprawdzam optymalizację mobile...' },
+                { id: 'check3', delay: 2000, message: '🔒 Weryfikuję certyfikat SSL...' },
+                { id: 'check4', delay: 10000, message: '🤖 Pytam ChatGPT o Twoją stronę...' },
+                { id: 'check5', delay: 10000, message: '✨ Sprawdzam w Gemini AI...' },
+                { id: 'check6', delay: 7000, message: '📋 Analizuję strukturę danych...' }
+            ];
+            
+            const funMessages = [
+                '💡 Wiedziałeś, że 53% użytkowników opuszcza stronę jeśli ładuje się dłużej niż 3s?',
+                '🎯 Sprawdzamy czy Google Cię lubi...',
+                '🔍 Przeczesujemy Internet w poszukiwaniu informacji o Tobie...',
+                '⚡ To trwa dłużej, bo robimy to dokładnie!',
+                '🎨 Analizujemy każdy piksel Twojej strony...',
+                '🌟 Prawie gotowe! Przygotowujemy raport...'
+            ];
+            
+            let messageIndex = 0;
+            const messageInterval = setInterval(() => {
+                const messageEl = document.getElementById('loadingMessage');
+                if (messageEl && messageIndex < funMessages.length) {
+                    messageEl.textContent = funMessages[messageIndex];
+                    messageIndex++;
+                }
+            }, 5000);
+            
+            let progress = 0;
+            const progressIncrement = 100 / checks.length;
+            
+            document.getElementById('progressBar').style.width = '2%';
+            document.getElementById('progressText').textContent = '2%';
+            document.getElementById('statusText').textContent = 'Rozpoczynam analizę...';
+            
+            for (let i = 0; i < checks.length; i++) {
+                document.getElementById('statusText').textContent = checks[i].message;
+                
+                progress += progressIncrement / 2;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').textContent = Math.round(progress) + '%';
+                
+                await new Promise(resolve => setTimeout(resolve, checks[i].delay));
+                
+                progress += progressIncrement / 2;
+                document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').textContent = Math.round(progress) + '%';
+                
+                const checkEl = document.getElementById(checks[i].id);
+                checkEl.innerHTML = `<span class="mr-3 text-xl">✅</span> ${checkEl.textContent.split(' ').slice(1).join(' ')}`;
+                checkEl.classList.remove('text-gray-400');
+                checkEl.classList.add('text-green-600', 'font-medium');
+            }
+            
+            clearInterval(messageInterval);
+            document.getElementById('statusText').textContent = '✨ Generuję raport...';
+            
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, url })
+                });
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                auditData = await response.json();
+            } catch (error) {
+                console.error('API Error:', error);
+                auditData = {
+                    score: 47,
+                    pageSpeed: 35,
+                    loadTime: 4.2,
+                    mobileFriendly: false,
+                    https: true,
+                    chatGPTCitation: false,
+                    geminiCitation: false,
+                    schemaMarkup: false
+                };
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, 500));
+            showResults(email, url, auditData);
         }
-    }, 5000);
-    
-    let progress = 0;
-    const progressIncrement = 100 / checks.length;
-    
-    // Natychmiastowa aktualizacja - pokaż że coś się dzieje!
-    document.getElementById('progressBar').style.width = '2%';
-    document.getElementById('progressText').textContent = '2%';
-    document.getElementById('statusText').textContent = 'Rozpoczynam analizę...';
-    
-    for (let i = 0; i < checks.length; i++) {
-        // Zaktualizuj status message
-        const statusEl = document.getElementById('statusText');
-        if (statusEl) {
-            statusEl.textContent = checks[i].message;
-        }
-        
-        // Natychmiast pokaż progress dla tego kroku
-        progress += progressIncrement / 2; // Połowa progressu na start
-        document.getElementById('progressBar').style.width = progress + '%';
-        document.getElementById('progressText').textContent = Math.round(progress) + '%';
-        
-        // Poczekaj (symulacja analizy)
-        await new Promise(resolve => setTimeout(resolve, checks[i].delay));
-        
-        // Dokończ progress dla tego kroku
-        progress += progressIncrement / 2;
-        document.getElementById('progressBar').style.width = progress + '%';
-        document.getElementById('progressText').textContent = Math.round(progress) + '%';
-        
-        // Update check - zmień ikonę i kolor
-        const checkEl = document.getElementById(checks[i].id);
-        checkEl.innerHTML = `<span class="mr-3 text-xl">✅</span> ${checkEl.textContent.substring(checkEl.textContent.indexOf(' ') + 1)}`;
-        checkEl.classList.remove('text-gray-400');
-        checkEl.classList.add('text-green-600', 'font-medium');
-        
-        // Animacja - bounce effect
-        checkEl.style.transform = 'scale(1.05)';
-        setTimeout(() => {
-            checkEl.style.transform = 'scale(1)';
-        }, 200);
-    }
-    
-    clearInterval(messageInterval);
-    
-    // Finalizacja
-    document.getElementById('statusText').textContent = '✨ Generuję raport...';
-    document.getElementById('loadingMessage').textContent = '🎉 Prawie gotowe!';
-    
-    // Call backend API
-    try {
-        const response = await fetch('/api/analyze', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, url })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        auditData = await response.json();
-        
-        // Krótka pauza przed pokazaniem wyników (dla efektu)
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        showResults(email, url, auditData);
-    } catch (error) {
-        console.error('API Error:', error);
-        
-        // Mock data for demo (fallback)
-        auditData = {
-            score: 47,
-            pageSpeed: 35,
-            loadTime: 4.2,
-            mobileFriendly: false,
-            https: true,
-            chatGPTCitation: false,
-            geminiCitation: false,
-            schemaMarkup: false
-        };
-        
-        await new Promise(resolve => setTimeout(resolve, 500));
-        showResults(email, url, auditData);
-    }
-}
         
         function showResults(email, url, data) {
-            // Hide screen 2, show screen 3
-            document.getElementById('screen2').style.display = 'none';
-            document.getElementById('screen3').style.display = 'block';
+            document.getElementById('screen2').classList.remove('active');
+            document.getElementById('screen3').classList.add('active');
             
             document.getElementById('resultUrl').textContent = url;
             document.getElementById('userEmail').textContent = email;
             
-            // Create chart
             const ctx = document.getElementById('scoreChart').getContext('2d');
             const chartColor = data.score >= 70 ? '#10b981' : data.score >= 40 ? '#f59e0b' : '#ef4444';
             
@@ -434,30 +356,21 @@
                 },
                 options: {
                     cutout: '75%',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: false }
-                    }
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } }
                 },
                 plugins: [{
                     beforeDraw: function(chart) {
-                        const width = chart.width;
-                        const height = chart.height;
                         const ctx = chart.ctx;
                         ctx.restore();
-                        const fontSize = (height / 80).toFixed(2);
-                        ctx.font = fontSize + "em sans-serif";
+                        ctx.font = (chart.height / 80).toFixed(2) + "em sans-serif";
                         ctx.textBaseline = "middle";
                         const text = data.score + "%";
-                        const textX = Math.round((width - ctx.measureText(text).width) / 2);
-                        const textY = height / 2;
-                        ctx.fillText(text, textX, textY);
+                        ctx.fillText(text, Math.round((chart.width - ctx.measureText(text).width) / 2), chart.height / 2);
                         ctx.save();
                     }
                 }]
             });
             
-            // Visibility status
             const statusEl = document.getElementById('visibilityStatus');
             const impactEl = document.getElementById('visibilityImpact');
             
@@ -475,10 +388,8 @@
                 impactEl.textContent = 'Tracisz ~70% potencjalnych klientów!';
             }
             
-            // Problems list
             const problems = getTop2Problems(data);
-            const problemsListEl = document.getElementById('problemsList');
-            problemsListEl.innerHTML = problems.map((p, i) => `
+            document.getElementById('problemsList').innerHTML = problems.map((p, i) => `
                 <div class="border-l-2 border-red-400 pl-4">
                     <p class="font-bold text-gray-800">${i + 1}. ${p.title}</p>
                     <p class="text-sm text-gray-600">→ ${p.impact}</p>
@@ -488,42 +399,11 @@
         
         function getTop2Problems(data) {
             const problems = [];
-            
-            if (data.pageSpeed < 60) {
-                problems.push({
-                    title: `Strona ładuje się ${data.loadTime}s`,
-                    impact: 'Użytkownicy uciekają po 3s - tracisz klientów'
-                });
-            }
-            
-            if (!data.chatGPTCitation && !data.geminiCitation) {
-                problems.push({
-                    title: 'ChatGPT i Gemini nie znają Twojej firmy',
-                    impact: 'Konkurencja zabiera klientów z AI'
-                });
-            }
-            
-            if (!data.mobileFriendly) {
-                problems.push({
-                    title: 'Strona nie działa na telefonach',
-                    impact: '70% użytkowników korzysta z mobile'
-                });
-            }
-            
-            if (!data.https) {
-                problems.push({
-                    title: 'Brak certyfikatu bezpieczeństwa',
-                    impact: 'Google karze strony bez HTTPS'
-                });
-            }
-            
-            if (!data.schemaMarkup) {
-                problems.push({
-                    title: 'Brak Schema Markup',
-                    impact: 'AI nie rozumie struktury Twojej strony'
-                });
-            }
-            
+            if (data.pageSpeed < 60) problems.push({title: `Strona ładuje się ${data.loadTime}s`, impact: 'Użytkownicy uciekają po 3s'});
+            if (!data.chatGPTCitation && !data.geminiCitation) problems.push({title: 'ChatGPT i Gemini nie znają Twojej firmy', impact: 'Konkurencja zabiera klientów'});
+            if (!data.mobileFriendly) problems.push({title: 'Strona nie działa na telefonach', impact: '70% użytkowników korzysta z mobile'});
+            if (!data.https) problems.push({title: 'Brak certyfikatu bezpieczeństwa', impact: 'Google karze strony'});
+            if (!data.schemaMarkup) problems.push({title: 'Brak Schema Markup', impact: 'AI nie rozumie struktury'});
             return problems.slice(0, 2);
         }
         
@@ -532,11 +412,12 @@
             const url = document.getElementById('resultUrl').textContent;
             
             if (type === 'basic') {
-                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie BASIC SEO/GEO&body=Email: ${email}%0AStrona: ${url}%0A%0AChcę zamówić pakiet BASIC za 200€/mies`;
+                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie BASIC&body=Email: ${email}%0AStrona: ${url}`;
             } else {
-                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Wycena PRO MARKETING&body=Email: ${email}%0AStrona: ${url}%0A%0AProszę o indywidualną wycenę pakietu PRO`;
+                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Wycena PRO&body=Email: ${email}%0AStrona: ${url}`;
             }
         }
+        
         function showModal(message) {
             const backdrop = document.createElement('div');
             backdrop.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -554,30 +435,9 @@
                     </button>
                 </div>
             `;
-            
             backdrop.appendChild(modal);
             document.body.appendChild(backdrop);
         }
     </script>
-<style>
-    /* Wymuś ukrycie ekranów */
-    .screen-hidden {
-        display: none !important;
-    }
-    
-    .screen-visible {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 1rem;
-    }
-</style>
-
 </body>
 </html>
