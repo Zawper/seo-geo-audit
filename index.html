@@ -79,7 +79,7 @@
     </div>
 
     <!-- SCREEN 2: Loading -->
-<div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden">
+<div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden" style="display: none;">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
     
     <!-- Spinning loader -->
@@ -184,7 +184,7 @@
     </div>
 
     <!-- SCREEN 3: Results -->
-    <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full hidden">
+    <div id="screen3" class="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full hidden" style="display: none;">
         <h2 class="text-2xl font-bold text-gray-800 mb-6">Wynik dla <span id="resultUrl" class="text-purple-600"></span></h2>
         
         <div class="grid md:grid-cols-2 gap-6 mb-8">
@@ -283,8 +283,8 @@
     }
     
     // Show screen 2
-            document.getElementById('screen1').classList.add('hidden');
-            document.getElementById('screen2').classList.remove('hidden');
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'block';
             document.getElementById('analyzingUrl').textContent = url;
             
             // Start analysis
@@ -407,8 +407,8 @@
         
         function showResults(email, url, data) {
             // Hide screen 2, show screen 3
-            document.getElementById('screen2').classList.add('hidden');
-            document.getElementById('screen3').classList.remove('hidden');
+            document.getElementById('screen2').style.display = 'none';
+            document.getElementById('screen3').style.display = 'block';
             
             document.getElementById('resultUrl').textContent = url;
             document.getElementById('userEmail').textContent = email;
