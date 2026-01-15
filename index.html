@@ -6,6 +6,32 @@
     <title>Sprawdź widoczność swojej strony</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* Dodatkowe animacje */
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    
+    .animate-spin {
+        animation: spin 1s linear infinite;
+    }
+    
+    .animate-pulse {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    /* Smooth transitions */
+    #screen2 > * {
+        transition: all 0.3s ease;
+    }
+</style>
+    
 </head>
 <body class="bg-gradient-to-br from-purple-50 via-pink-50 to-fuchsia-100 min-h-screen flex items-center justify-center p-4 md:p-8">
     
