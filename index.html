@@ -375,6 +375,27 @@
                 window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Wycena PRO MARKETING&body=Email: ${email}%0AStrona: ${url}%0A%0AProszę o indywidualną wycenę pakietu PRO`;
             }
         }
+        function showModal(message) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            backdrop.onclick = () => backdrop.remove();
+            
+            const modal = document.createElement('div');
+            modal.className = 'bg-white rounded-2xl p-8 max-w-sm mx-4 shadow-2xl';
+            modal.innerHTML = `
+                <div class="text-center">
+                    <div class="text-4xl mb-4">⚠️</div>
+                    <p class="text-lg text-gray-800 mb-6">${message}</p>
+                    <button onclick="this.closest('.fixed').remove()" 
+                            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg">
+                        OK
+                    </button>
+                </div>
+            `;
+            
+            backdrop.appendChild(modal);
+            document.body.appendChild(backdrop);
+        }
     </script>
 </body>
 </html>
