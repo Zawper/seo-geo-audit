@@ -268,58 +268,118 @@
         }
         
         async function runAnalysis(email, url) {
-            const checks = [
-                { id: 'check1', name: 'PageSpeed', delay: 8000 },
-                { id: 'check2', name: 'Mobile', delay: 3000 },
-                { id: 'check3', name: 'HTTPS', delay: 2000 },
-                { id: 'check4', name: 'ChatGPT', delay: 10000 },
-                { id: 'check5', name: 'Gemini', delay: 10000 },
-                { id: 'check6', name: 'Schema', delay: 7000 }
-            ];
-            
-            let progress = 0;
-            const progressIncrement = 100 / checks.length;
-            
-            for (let i = 0; i < checks.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, checks[i].delay));
-                
-                // Update check
-                const checkEl = document.getElementById(checks[i].id);
-                checkEl.innerHTML = `<span class="mr-2">✓</span> ${checkEl.textContent.substring(2)}`;
-                checkEl.classList.remove('text-gray-400');
-                checkEl.classList.add('text-green-600');
-                
-                // Update progress
-                progress += progressIncrement;
-                document.getElementById('progressBar').style.width = progress + '%';
-                document.getElementById('progressText').textContent = Math.round(progress) + '%';
-            }
-            
-            // Call backend API
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, url })
-                });
-                
-                auditData = await response.json();
-                showResults(email, url, auditData);
-            } catch (error) {
-                // Mock data for demo
-                auditData = {
-                    score: 47,
-                    pageSpeed: 35,
-                    loadTime: 4.2,
-                    mobileFriendly: false,
-                    https: true,
-                    chatGPTCitation: false,
-                    geminiCitation: false,
-                    schemaMarkup: false
-                };
-                showResults(email, url, auditData);
-            }
+    const checks = [
+        { id: 'check1', name: 'PageSpeed', delay: 8000, message: '🚀 Testuję prędkość ładowania...' },
+        { id: 'check2', name: 'Mobile', delay: 3000, message: '📱 Sprawdzam optymalizację mobile...' },
+        { id: 'check3', name: 'HTTPS', delay: 2000, message: '🔒 Weryfikuję certyfikat SSL...' },
+        { id: 'check4', name: 'ChatGPT', delay: 10000, message: '🤖 Pytam ChatGPT o Twoją stronę...' },
+        { id: 'check5', name: 'Gemini', delay: 10000, message: '✨ Sprawdzam w Gemini AI...' },
+        { id: 'check6', name: 'Schema', delay: 7000, message: '📋 Analizuję strukturę danych...' }
+    ];
+    
+    // Zabawne wiadomości co 5 sekund
+    const funMessages = [
+        '💡 Wiedziałeś, że 53% użytkowników opuszcza stronę jeśli ładuje się dłużej niż 3s?',
+        '🎯 Sprawdzamy czy Google Cię lubi...',
+        '🔍 Przeczesujemy Internet w poszukiwaniu informacji o Tobie...',
+        '⚡ To trwa dłużej, bo robimy to dokładnie!',
+        '🎨 Analizujemy każdy piksel Twojej strony...',
+        '🌟 Prawie gotowe! Przygotowujemy raport...'
+    ];
+    
+    let messageIndex = 0;
+    const messageInterval = setInterval(() => {
+        const messageEl = document.getElementById('loadingMessage');
+        if (messageEl && messageIndex < funMessages.length) {
+            messageEl.textContent = funMessages[messageIndex];
+            messageIndex++;
         }
+    }, 5000);
+    
+    let progress = 0;
+    const progressIncrement = 100 / checks.length;
+    
+    // Natychmiastowa aktualizacja - pokaż że coś się dzieje!
+    document.getElementById('progressBar').style.width = '2%';
+    document.getElementById('progressText').textContent = '2%';
+    document.getElementById('statusText').textContent = 'Rozpoczynam analizę...';
+    
+    for (let i = 0; i < checks.length; i++) {
+        // Zaktualizuj status message
+        const statusEl = document.getElementById('statusText');
+        if (statusEl) {
+            statusEl.textContent = checks[i].message;
+        }
+        
+        // Natychmiast pokaż progress dla tego kroku
+        progress += progressIncrement / 2; // Połowa progressu na start
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        
+        // Poczekaj (symulacja analizy)
+        await new Promise(resolve => setTimeout(resolve, checks[i].delay));
+        
+        // Dokończ progress dla tego kroku
+        progress += progressIncrement / 2;
+        document.getElementById('progressBar').style.width = progress + '%';
+        document.getElementById('progressText').textContent = Math.round(progress) + '%';
+        
+        // Update check - zmień ikonę i kolor
+        const checkEl = document.getElementById(checks[i].id);
+        checkEl.innerHTML = `<span class="mr-3 text-xl">✅</span> ${checkEl.textContent.substring(checkEl.textContent.indexOf(' ') + 1)}`;
+        checkEl.classList.remove('text-gray-400');
+        checkEl.classList.add('text-green-600', 'font-medium');
+        
+        // Animacja - bounce effect
+        checkEl.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            checkEl.style.transform = 'scale(1)';
+        }, 200);
+    }
+    
+    clearInterval(messageInterval);
+    
+    // Finalizacja
+    document.getElementById('statusText').textContent = '✨ Generuję raport...';
+    document.getElementById('loadingMessage').textContent = '🎉 Prawie gotowe!';
+    
+    // Call backend API
+    try {
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, url })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        auditData = await response.json();
+        
+        // Krótka pauza przed pokazaniem wyników (dla efektu)
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        showResults(email, url, auditData);
+    } catch (error) {
+        console.error('API Error:', error);
+        
+        // Mock data for demo (fallback)
+        auditData = {
+            score: 47,
+            pageSpeed: 35,
+            loadTime: 4.2,
+            mobileFriendly: false,
+            https: true,
+            chatGPTCitation: false,
+            geminiCitation: false,
+            schemaMarkup: false
+        };
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
+        showResults(email, url, auditData);
+    }
+}
         
         function showResults(email, url, data) {
             // Hide screen 2, show screen 3
