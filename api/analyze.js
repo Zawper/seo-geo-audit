@@ -239,7 +239,14 @@ function calculateScore(data) {
 }
 
 // === SEND EMAIL ===
-async function sendEmailReport(email, url, data) {
+
+  async function sendEmailReport(email, url, data) {
+  console.log('===== EMAIL DEBUG START =====');
+  console.log('Recipient:', email);
+  console.log('URL:', url);
+  console.log('GMAIL_USER:', process.env.GMAIL_USER ? 'SET' : 'NOT SET');
+  console.log('GMAIL_APP_PASSWORD:', process.env.GMAIL_APP_PASSWORD ? 'SET (length: ' + process.env.GMAIL_APP_PASSWORD.length + ')' : 'NOT SET');
+  
   const nodemailer = require('nodemailer');
   
   const statusEmoji = data.score >= 70 ? '🟢' : data.score >= 40 ? '🟡' : '🔴';
@@ -362,7 +369,9 @@ async function sendEmailReport(email, url, data) {
   `;
   
   try {
-    console.log('Sending email to:', email);
+console.log('Email sent successfully to:', email);
+    console.log('===== EMAIL DEBUG END =====');
+    
     
     const transporter = nodemailer.createTransport({
       service: 'gmail',
