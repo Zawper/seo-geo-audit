@@ -55,8 +55,80 @@
     </div>
 
     <!-- SCREEN 2: Loading -->
-    <div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
+<div id="screen2" class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full hidden">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
+    
+    <!-- Spinning loader -->
+    <div class="flex justify-center mb-6">
+        <div class="relative w-32 h-32">
+            <!-- Outer spinning circle -->
+            <div class="absolute inset-0 border-8 border-purple-200 rounded-full"></div>
+            <div class="absolute inset-0 border-8 border-transparent border-t-purple-600 border-r-pink-600 rounded-full animate-spin"></div>
+            
+            <!-- Inner pulsing circle -->
+            <div class="absolute inset-4 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center animate-pulse">
+                <div class="text-3xl">🔍</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Progress bar -->
+    <div class="mb-6">
+        <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div id="progressBar" class="bg-gradient-to-r from-purple-600 to-pink-600 h-4 transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p id="progressText" class="text-center mt-2 text-gray-600 font-semibold">0%</p>
+        <p id="statusText" class="text-center mt-1 text-sm text-gray-500">Inicjalizacja...</p>
+    </div>
+    
+    <!-- Checklist with animations -->
+    <div class="space-y-3">
+        <div id="check1" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            Szybkość ładowania
+        </div>
+        <div id="check2" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            Optymalizacja mobile
+        </div>
+        <div id="check3" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            Test HTTPS
+        </div>
+        <div id="check4" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            ChatGPT visibility
+        </div>
+        <div id="check5" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            Gemini visibility
+        </div>
+        <div id="check6" class="flex items-center text-gray-400 transition-all duration-300">
+            <span class="mr-3 text-xl">
+                <span class="inline-block animate-spin">⏳</span>
+            </span> 
+            Schema Markup
+        </div>
+    </div>
+    
+    <!-- Fun loading messages -->
+    <div class="mt-6 p-4 bg-purple-50 rounded-lg text-center">
+        <p id="loadingMessage" class="text-sm text-purple-700 italic animate-pulse">
+            💡 Przygotowujemy analizę...
+        </p>
+    </div>
+</div>        
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Analizuję <span id="analyzingUrl" class="text-purple-600"></span></h2>
         
         <div class="mb-6">
             <div class="bg-gray-200 rounded-full h-4 overflow-hidden">
