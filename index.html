@@ -318,11 +318,8 @@ Analizuję example.com
             // Przełącz ekrany
             document.getElementById('screen1').classList.remove('active');
             document.getElementById('screen2').classList.add('active');
-            // Skróć URL jeśli za długi
-let displayUrl = url;
-if (url.length > 40) {
-    displayUrl = url.substring(0, 37) + '...';
-}
+            document.getElementById('analyzingUrl').textContent = url;
+
 document.getElementById('analyzingUrl').textContent = displayUrl;
             runAnalysis(email, url);
         }
