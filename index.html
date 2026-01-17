@@ -139,17 +139,25 @@ Analizuję example.com
 </div>
         
         <!-- Progress bar (powiększony i na środku) -->
-        <div class="mb-8">
-            <div class="bg-gray-200 rounded-full h-6 overflow-hidden shadow-inner">
-                <div id="progressBar" class="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 h-6 transition-all duration-500 relative" style="width: 0%">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
-                </div>
-            </div>
-            <div class="flex justify-between items-center mt-3">
-                <p id="progressText" class="text-xl font-bold text-gray-800">0%</p>
-                <p id="statusText" class="text-sm text-gray-600 text-right">Inicjalizacja...</p>
-            </div>
+        <!-- Progress bar (powiększony i na środku) -->
+<div class="mb-6">
+    <div class="bg-gray-200 rounded-full h-6 overflow-hidden shadow-inner">
+        <div id="progressBar" class="bg-gradient-to-r from-purple-600 via-purple-500 to-pink-600 h-6 transition-all duration-500 relative" style="width: 0%">
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-pulse"></div>
         </div>
+    </div>
+    <div class="flex justify-between items-center mt-3">
+        <p id="progressText" class="text-xl font-bold text-gray-800">0%</p>
+        <p id="statusText" class="text-sm text-gray-600 text-right">Inicjalizacja...</p>
+    </div>
+</div>
+
+<!-- Fun loading messages - TUTAJ TERAZ! -->
+<div class="mb-8 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg text-center border border-purple-100">
+    <p id="loadingMessage" class="text-sm text-purple-700 font-medium">
+        💡 Przygotowujemy analizę...
+    </p>
+</div>
         
         <!-- Checklist z małymi kółkami -->
         <div class="space-y-4">
@@ -212,13 +220,6 @@ Analizuję example.com
                 </div>
                 <span class="text-sm font-medium">Schema Markup</span>
             </div>
-        </div>
-        
-        <!-- Fun loading messages -->
-        <div class="mt-8 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg text-center border border-purple-100">
-            <p id="loadingMessage" class="text-sm text-purple-700 font-medium">
-                💡 Przygotowujemy analizę...
-            </p>
         </div>
     </div>
 </div>
