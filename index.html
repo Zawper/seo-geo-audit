@@ -207,16 +207,25 @@
         <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full overflow-y-auto" style="max-height: 90vh;">
             
             <!-- SEKCJA 1: HERO -->
-            <div class="bg-gradient-to-br from-purple-600 via-purple-500 to-pink-600 text-white p-8 md:p-12 rounded-t-2xl">
-                <div class="text-center mb-6">
+            <div class="relative bg-gradient-to-br from-purple-600 via-purple-500 to-pink-600 text-white p-8 md:p-12 rounded-t-2xl overflow-hidden" style="padding-bottom: 4rem;">
+                <!-- Extended background with wave -->
+                <div class="absolute bottom-0 left-0 right-0 h-16" style="background: linear-gradient(to bottom, rgba(147, 51, 234, 0.8), rgba(147, 51, 234, 0));">
+                    <svg class="absolute bottom-0 w-full h-16" preserveAspectRatio="none" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,0 C150,60 350,0 600,40 C850,80 1050,20 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,1)"></path>
+                    </svg>
+                </div>
+                
+                <div class="text-center mb-6 relative z-10">
                     <p class="text-sm opacity-90 mb-2">Wynik dla:</p>
                     <h2 id="resultUrl" class="text-xl md:text-2xl font-bold break-all px-4">example.com</h2>
                 </div>
                 
-                <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="grid md:grid-cols-2 gap-8 items-center relative z-10">
+                    <!-- Wykres z cieniem i 3D effect -->
                     <div class="flex justify-center">
-                        <div class="relative">
-                            <canvas id="scoreChart" width="300" height="300"></canvas>
+                        <div class="relative" style="filter: drop-shadow(0 25px 50px rgba(0,0,0,0.4));">
+                            <div class="absolute inset-0 bg-white/20 rounded-full blur-xl"></div>
+                            <canvas id="scoreChart" width="300" height="300" class="relative"></canvas>
                         </div>
                     </div>
                     
@@ -225,8 +234,8 @@
                         <h3 id="visibilityStatus" class="text-4xl md:text-5xl font-bold mb-4">🟡 ŚREDNIA</h3>
                         
                         <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-6 border border-white/20">
-                            <p class="text-2xl font-bold mb-1">⚠️ Tracisz ~<span id="monthlyLoss">15,000</span> zł</p>
-                            <p class="text-sm opacity-90">miesięcznie w utraconych klientach</p>
+                            <p class="text-2xl font-bold mb-1">⚠️ Możesz tracić ~<span id="monthlyLoss">3,000</span> zł</p>
+                            <p class="text-sm opacity-90">miesięcznie w utraconych wyświetleniach</p>
                         </div>
                     </div>
                 </div>
@@ -246,51 +255,51 @@
                     </button>
                     
                     <div id="technicalDetails" class="hidden mt-4 grid md:grid-cols-2 gap-4">
-                        <div id="detail-https" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">✅</span>
+                        <div id="detail-https" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">✅</span>
                             <div>
                                 <p class="font-semibold text-gray-800">HTTPS</p>
-                                <p class="text-sm text-gray-600">Aktywny</p>
+                                <p class="text-sm text-gray-600">Twoja strona ma bezpieczne szyfrowane połączenie - to podstawa zaufania dla użytkowników i Google.</p>
                             </div>
                         </div>
                         
-                        <div id="detail-pagespeed" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">❌</span>
+                        <div id="detail-pagespeed" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">❌</span>
                             <div>
                                 <p class="font-semibold text-gray-800">PageSpeed</p>
-                                <p class="text-sm text-gray-600">35% (KRYTYCZNE)</p>
+                                <p class="text-sm text-gray-600">Google zaleca powyżej 90/100 - Twoja strona ładuje się zbyt wolno, co zniechęca użytkowników i obniża pozycję w wyszukiwarce.</p>
                             </div>
                         </div>
                         
-                        <div id="detail-mobile" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">✅</span>
+                        <div id="detail-mobile" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">✅</span>
                             <div>
                                 <p class="font-semibold text-gray-800">Mobile</p>
-                                <p class="text-sm text-gray-600">Zoptymalizowane</p>
+                                <p class="text-sm text-gray-600">Twoja strona dobrze wyświetla się na telefonach - to kluczowe, bo ponad 70% ruchu pochodzi z urządzeń mobilnych.</p>
                             </div>
                         </div>
                         
-                        <div id="detail-chatgpt" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">❌</span>
+                        <div id="detail-chatgpt" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">❌</span>
                             <div>
                                 <p class="font-semibold text-gray-800">ChatGPT</p>
-                                <p class="text-sm text-gray-600">Brak widoczności</p>
+                                <p class="text-sm text-gray-600">ChatGPT nie zna Twojej firmy - tracisz miliony potencjalnych klientów, którzy pytają AI o rekomendacje zamiast googlować.</p>
                             </div>
                         </div>
                         
-                        <div id="detail-gemini" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">❌</span>
+                        <div id="detail-gemini" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">❌</span>
                             <div>
                                 <p class="font-semibold text-gray-800">Gemini</p>
-                                <p class="text-sm text-gray-600">Brak widoczności</p>
+                                <p class="text-sm text-gray-600">Asystent Google Gemini nie poleca Twojej strony - to AI z dostępem do miliardów użytkowników Google.</p>
                             </div>
                         </div>
                         
-                        <div id="detail-schema" class="flex items-center p-3 bg-gray-50 rounded-lg">
-                            <span class="text-2xl mr-3">❌</span>
+                        <div id="detail-schema" class="flex items-start p-4 bg-gray-50 rounded-lg">
+                            <span class="text-2xl mr-3 flex-shrink-0">❌</span>
                             <div>
                                 <p class="font-semibold text-gray-800">Schema Markup</p>
-                                <p class="text-sm text-gray-600">Brak</p>
+                                <p class="text-sm text-gray-600">Brak ustrukturyzowanych danych - Google i AI nie rozumieją pełnej struktury Twojej strony, co ogranicza widoczność.</p>
                             </div>
                         </div>
                     </div>
@@ -312,10 +321,10 @@
                         </h3>
                         
                         <div class="flex items-center justify-center gap-4 mb-6">
-                            <span class="text-3xl text-gray-400 line-through">39€</span>
-                            <span class="text-5xl font-bold text-purple-600">12€</span>
+                            <span class="text-3xl text-gray-400 line-through">49 zł</span>
+                            <span class="text-5xl font-bold text-purple-600">19 zł</span>
                             <span class="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
-                                -70% TYLKO DZIŚ!
+                                -60% TYLKO DZIŚ!
                             </span>
                         </div>
                     </div>
@@ -346,18 +355,12 @@
                                 </svg>
                                 <span class="text-gray-700"><strong>Wycena kosztów wdrożenia</strong> - transparentne budżetowanie</span>
                             </li>
-                            <li class="flex items-start">
-                                <svg class="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                </svg>
-                                <span class="text-gray-700"><strong>30 dni wsparcia email</strong> - odpowiemy na każde pytanie</span>
-                            </li>
                         </ul>
                     </div>
                     
                     <button onclick="buyFullReport()" 
                             class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition duration-200 transform hover:scale-105 shadow-2xl mb-4">
-                        🔥 KUP TERAZ ZA 12€
+                        🔥 KUP TERAZ ZA 19 ZŁ
                     </button>
                     
                     <div class="flex items-center justify-center gap-6 text-sm text-gray-600">
@@ -378,18 +381,18 @@
                         <div class="flex items-center justify-center gap-2 mb-2">
                             <span class="text-3xl">⭐⭐⭐⭐⭐</span>
                         </div>
-                        <p class="text-xl font-bold text-gray-800">4.9/5 z 120 opinii</p>
+                        <p class="text-xl font-bold text-gray-800">4.7/5.0 z 120 opinii</p>
                     </div>
                     
                     <div class="grid md:grid-cols-2 gap-4 mb-6">
                         <div class="bg-white p-6 rounded-xl border border-gray-200">
                             <div class="flex items-center gap-3 mb-3">
-                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                                    JK
+                                <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                    MT
                                 </div>
                                 <div>
-                                    <p class="font-bold text-gray-800">Jan Kowalski</p>
-                                    <p class="text-sm text-gray-600">CEO TechStart</p>
+                                    <p class="font-bold text-gray-800">Marek Tyszkiewicz</p>
+                                    <p class="text-sm text-gray-600">Handel drewnem</p>
                                 </div>
                             </div>
                             <p class="text-gray-700 italic">"Ruch wzrósł o 340% w 3 miesiące. ChatGPT teraz poleca nas jako pierwszych!"</p>
@@ -398,11 +401,11 @@
                         <div class="bg-white p-6 rounded-xl border border-gray-200">
                             <div class="flex items-center gap-3 mb-3">
                                 <div class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center text-white font-bold">
-                                    AN
+                                    JR
                                 </div>
                                 <div>
-                                    <p class="font-bold text-gray-800">Anna Nowak</p>
-                                    <p class="text-sm text-gray-600">Właściciel e-sklepu</p>
+                                    <p class="font-bold text-gray-800">Jan R.</p>
+                                    <p class="text-sm text-gray-600">Właściciel sklepu wędkarskiego</p>
                                 </div>
                             </div>
                             <p class="text-gray-700 italic">"PageSpeed wzrósł z 35% do 92%. Konwersja podwoiła się!"</p>
@@ -419,8 +422,9 @@
                             <p class="text-sm text-gray-600">Średni wzrost widoczności</p>
                         </div>
                         <div class="bg-white p-4 rounded-xl">
-                            <p class="text-3xl font-bold text-purple-600 mb-1">450%</p>
-                            <p class="text-sm text-gray-600">Średni ROI</p>
+                            <p class="text-3xl font-bold text-purple-600 mb-1">150%</p>
+                            <p class="text-sm text-gray-600">Średni ROI*</p>
+                            <p class="text-xs text-gray-500 mt-1">*zwrot z inwestycji</p>
                         </div>
                     </div>
                 </div>
@@ -557,7 +561,7 @@
                                 </svg>
                             </button>
                             <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700 text-sm">
-                                Napisz do nas na <a href="mailto:pomelomarketingandsoft@gmail.com" class="text-purple-600 hover:underline font-semibold">pomelomarketingandsoft@gmail.com</a>
+                                Napisz do nas na <a href="/cdn-cgi/l/email-protection#90e0fffdf5fcfffdf1e2fbf5e4f9fef7f1fef4e3fff6e4d0f7fdf1f9fcbef3fffd" class="text-purple-600 hover:underline font-semibold"><span class="__cf_email__" data-cfemail="acdcc3c1c9c0c3c1cddec7c9d8c5c2cbcdc2c8dfc3cad8eccbc1cdc5c082cfc3c1">[email&#160;protected]</span></a>
                             </div>
                         </div>
                     </div>
@@ -571,7 +575,7 @@
                     <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
                         <button onclick="buyFullReport()" 
                                 class="bg-white text-purple-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
-                            📊 KUP RAPORT 12€
+                            📊 KUP RAPORT 19 ZŁ
                         </button>
                         <button onclick="selectPackage('basic')" 
                                 class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
@@ -580,7 +584,7 @@
                     </div>
                     
                     <p class="text-sm opacity-75">
-                        📧 Raport wysłany też na: <span id="userEmailFinal" class="font-semibold">user@email.pl</span>
+                        📧 Raport wysłany też na: <span id="userEmailFinal" class="font-semibold"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="512422342311343c30383d7f213d">[email&#160;protected]</a></span>
                     </p>
                 </div>
                 
@@ -592,11 +596,11 @@
     <div id="stickyMobileCTA" class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-purple-500 p-4 md:hidden shadow-2xl z-40 hidden">
         <button onclick="buyFullReport()" 
                 class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-lg shadow-xl">
-            🔥 KUP RAPORT 12€
+            🔥 KUP RAPORT 19 ZŁ
         </button>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let auditData = {};
         let exitPopupShown = false;
         
@@ -748,10 +752,26 @@
                     beforeDraw: function(chart) {
                         const ctx = chart.ctx;
                         ctx.restore();
-                        ctx.font = (chart.height / 80).toFixed(2) + "em sans-serif";
+                        
+                        // Większy, pogrubiony font
+                        ctx.font = "bold " + (chart.height / 4).toFixed(2) + "px sans-serif";
                         ctx.textBaseline = "middle";
+                        ctx.textAlign = "center";
+                        
                         const text = data.score + "%";
-                        ctx.fillText(text, Math.round((chart.width - ctx.measureText(text).width) / 2), chart.height / 2);
+                        const x = chart.width / 2;
+                        const y = chart.height / 2;
+                        
+                        // Cień dla głębi
+                        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                        ctx.shadowBlur = 10;
+                        ctx.shadowOffsetX = 3;
+                        ctx.shadowOffsetY = 3;
+                        
+                        // Biały tekst
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(text, x, y);
+                        
                         ctx.save();
                     }
                 }]
@@ -778,12 +798,12 @@
                 statusEl.className = 'text-4xl md:text-5xl font-bold mb-4 text-red-400';
             }
             
-            updateTechnicalDetail('detail-https', data.https, 'HTTPS', data.https ? 'Aktywny' : 'Brak');
-            updateTechnicalDetail('detail-pagespeed', data.pageSpeed >= 60, 'PageSpeed', `${data.pageSpeed}%` + (data.pageSpeed < 60 ? ' (KRYTYCZNE)' : ''));
-            updateTechnicalDetail('detail-mobile', data.mobileFriendly, 'Mobile', data.mobileFriendly ? 'Zoptymalizowane' : 'Wymaga poprawy');
-            updateTechnicalDetail('detail-chatgpt', data.chatGPTCitation, 'ChatGPT', data.chatGPTCitation ? 'Widoczny' : 'Brak widoczności');
-            updateTechnicalDetail('detail-gemini', data.geminiCitation, 'Gemini', data.geminiCitation ? 'Widoczny' : 'Brak widoczności');
-            updateTechnicalDetail('detail-schema', data.schemaMarkup, 'Schema Markup', data.schemaMarkup ? 'Wdrożony' : 'Brak');
+            updateTechnicalDetail('detail-https', data.https, 'HTTPS', data.https ? 'Twoja strona ma bezpieczne szyfrowane połączenie - to podstawa zaufania dla użytkowników i Google.' : 'Brak bezpiecznego połączenia - użytkownicy i Google nie ufają stronie.');
+            updateTechnicalDetail('detail-pagespeed', data.pageSpeed >= 60, 'PageSpeed', data.pageSpeed >= 60 ? `${data.pageSpeed}% - Świetnie! Strona ładuje się szybko.` : `${data.pageSpeed}% - Google zaleca powyżej 90/100. Twoja strona ładuje się zbyt wolno, co zniechęca użytkowników i obniża pozycję w wyszukiwarce.`);
+            updateTechnicalDetail('detail-mobile', data.mobileFriendly, 'Mobile', data.mobileFriendly ? 'Twoja strona dobrze wyświetla się na telefonach - to kluczowe, bo ponad 70% ruchu pochodzi z urządzeń mobilnych.' : 'Strona źle działa na telefonach - tracisz 70% potencjalnego ruchu.');
+            updateTechnicalDetail('detail-chatgpt', data.chatGPTCitation, 'ChatGPT', data.chatGPTCitation ? 'ChatGPT zna Twoją firmę i może ją polecać użytkownikom.' : 'ChatGPT nie zna Twojej firmy - tracisz miliony potencjalnych klientów, którzy pytają AI o rekomendacje zamiast googlować.');
+            updateTechnicalDetail('detail-gemini', data.geminiCitation, 'Gemini', data.geminiCitation ? 'Asystent Google Gemini zna i poleca Twoją stronę.' : 'Asystent Google Gemini nie poleca Twojej strony - to AI z dostępem do miliardów użytkowników Google.');
+            updateTechnicalDetail('detail-schema', data.schemaMarkup, 'Schema Markup', data.schemaMarkup ? 'Struktura danych wdrożona - Google i AI rozumieją pełną strukturę Twojej strony.' : 'Brak ustrukturyzowanych danych - Google i AI nie rozumieją pełnej struktury Twojej strony, co ogranicza widoczność.');
             
             generateBusinessImpact(data);
             startCountdown(24);
@@ -804,7 +824,7 @@
         
         // === CALCULATE LOSS ===
         function calculateLoss(score, loadTime) {
-            const avgValue = 50;
+            const avgValue = 10; // Zmniejszone z 50 do 10 (o 80%)
             const traffic = 1000;
             const baseConversion = 0.03;
             const loss = (100 - score) / 100;
@@ -876,7 +896,7 @@
             const email = document.getElementById('userEmailFinal').textContent;
             const url = document.getElementById('resultUrl').textContent;
             
-            window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie raportu za 12€&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
+            window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie raportu za 19 zł&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
         }
         
         // === SELECT PACKAGE ===
@@ -897,9 +917,9 @@
             const icon = isPassing ? '✅' : '❌';
             const bgColor = isPassing ? 'bg-green-50' : 'bg-red-50';
             
-            element.className = `flex items-center p-3 rounded-lg ${bgColor}`;
+            element.className = `flex items-start p-4 rounded-lg ${bgColor}`;
             element.innerHTML = `
-                <span class="text-2xl mr-3">${icon}</span>
+                <span class="text-2xl mr-3 flex-shrink-0">${icon}</span>
                 <div>
                     <p class="font-semibold text-gray-800">${title}</p>
                     <p class="text-sm text-gray-600">${subtitle}</p>
@@ -912,40 +932,44 @@
             const problems = [];
             
             if (data.pageSpeed < 60) {
-                const loadTimeLoss = Math.round(8500 * (data.loadTime / 4.2));
-                const customersLost = Math.round(loadTimeLoss / 50);
+                const loadTimeLoss = Math.round(1700 * (data.loadTime / 4.2)); // Zmniejszone o 80% (z 8500 do 1700)
+                const viewsLost = Math.round(loadTimeLoss * 5); // Wyświetlenia zamiast klientów
                 problems.push({
                     title: `Strona ładuje się ${data.loadTime}s`,
                     loss: loadTimeLoss.toLocaleString('pl-PL'),
-                    customers: customersLost,
-                    fixTime: '1-2 tygodnie'
+                    views: viewsLost.toLocaleString('pl-PL'),
+                    fixTime: '1-2 tygodnie',
+                    description: 'Wolne ładowanie powoduje, że użytkownicy opuszczają stronę zanim się załaduje. Google karze wolne strony niższą pozycją w wynikach wyszukiwania.'
                 });
             }
             
             if (!data.chatGPTCitation || !data.geminiCitation) {
                 problems.push({
                     title: 'ChatGPT/Gemini nie znają Twojej firmy',
-                    loss: '6,500',
-                    customers: 130,
-                    fixTime: '2-3 tygodnie'
+                    loss: '1,300', // Zmniejszone o 80% (z 6500 do 1300)
+                    views: '6,500',
+                    fixTime: '2-3 tygodnie',
+                    description: 'AI asystenci mają dostęp do milionów użytkowników dziennie. Brak widoczności w AI oznacza utratę całej grupy klientów, którzy pytają AI zamiast Google.'
                 });
             }
             
             if (!data.mobileFriendly) {
                 problems.push({
                     title: 'Strona nie działa dobrze na telefonach',
-                    loss: '5,200',
-                    customers: 104,
-                    fixTime: '1 tydzień'
+                    loss: '1,040', // Zmniejszone o 80% (z 5200 do 1040)
+                    views: '5,200',
+                    fixTime: '1 tydzień',
+                    description: 'Ponad 70% użytkowników przegląda internet na telefonach. Strona, która źle działa na mobile, traci większość potencjalnych klientów.'
                 });
             }
             
             if (!data.schemaMarkup) {
                 problems.push({
                     title: 'Brak Schema Markup',
-                    loss: '3,800',
-                    customers: 76,
-                    fixTime: '3-5 dni'
+                    loss: '760', // Zmniejszone o 80% (z 3800 do 760)
+                    views: '3,800',
+                    fixTime: '3-5 dni',
+                    description: 'Schema Markup to język, którym Google i AI rozumieją Twoją stronę. Bez niego Twoja strona jest jak książka bez spisu treści - trudna do zrozumienia.'
                 });
             }
             
@@ -957,14 +981,15 @@
                     <h4 class="text-xl font-bold text-gray-800 mb-3">
                         Problem #${index + 1}: ${problem.title}
                     </h4>
+                    <p class="text-sm text-gray-600 mb-4 italic">${problem.description}</p>
                     <div class="space-y-2 text-gray-700">
                         <p class="flex items-center">
                             <span class="text-2xl mr-2">📉</span>
-                            <span>Tracisz: <strong class="text-red-600">~${problem.loss} zł/mies</strong></span>
+                            <span>Możesz tracić: <strong class="text-red-600">~${problem.loss} zł/mies</strong></span>
                         </p>
                         <p class="flex items-center">
-                            <span class="text-2xl mr-2">👥</span>
-                            <span>To: <strong>~${problem.customers} klientów miesięcznie</strong></span>
+                            <span class="text-2xl mr-2">👁️</span>
+                            <span>To: <strong>~${problem.views} wyświetleń miesięcznie</strong></span>
                         </p>
                         <p class="flex items-center">
                             <span class="text-2xl mr-2">⏱️</span>
@@ -974,6 +999,10 @@
                     <button onclick="selectPackage('basic')" 
                             class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition">
                         Naprawmy to →
+                    </button>
+                </div>
+            `).join('');
+        }
                     </button>
                 </div>
             `).join('');
@@ -1001,16 +1030,16 @@
                     <div class="text-6xl mb-4">⚠️</div>
                     <h3 class="text-2xl font-bold text-gray-800 mb-3">Zaczekaj!</h3>
                     <p class="text-gray-600 mb-6">
-                        Tracisz <strong class="text-red-600">${document.getElementById('monthlyLoss').textContent} zł/mies</strong> 
+                        Możesz tracić <strong class="text-red-600">${document.getElementById('monthlyLoss').textContent} zł/mies</strong> 
                         przez złą widoczność.
                     </p>
                     <p class="text-lg font-semibold text-purple-600 mb-6">
-                        Naprawmy to razem za tylko 12€
+                        Naprawmy to razem za tylko 19 zł
                     </p>
                     <div class="flex flex-col gap-3">
                         <button onclick="buyFullReport(); document.getElementById('exitPopup').remove();" 
                                 class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg transition shadow-lg">
-                            🔥 Kup raport za 12€
+                            🔥 Kup raport za 19 zł
                         </button>
                         <button onclick="document.getElementById('exitPopup').remove();" 
                                 class="text-gray-500 hover:text-gray-700 text-sm">
@@ -1042,15 +1071,4 @@
                 <div class="text-center">
                     <div class="text-4xl mb-4">⚠️</div>
                     <p class="text-lg text-gray-800 mb-6">${message}</p>
-                    <button onclick="this.closest('.fixed').remove()" 
-                            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg">
-                        OK
-                    </button>
-                </div>
-            `;
-            backdrop.appendChild(modal);
-            document.body.appendChild(backdrop);
-        }
-    </script>
-</body>
-</html>
+                    <button onclick="this.closest('.fixed').remove()"
