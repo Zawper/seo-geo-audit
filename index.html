@@ -1071,4 +1071,15 @@
                 <div class="text-center">
                     <div class="text-4xl mb-4">⚠️</div>
                     <p class="text-lg text-gray-800 mb-6">${message}</p>
-                    <button onclick="this.closest('.fixed').remove()"
+                    <button onclick="this.closest('.fixed').remove()" 
+                                                     class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg">
+                        OK
+                    </button>
+                </div>
+            `;
+            backdrop.appendChild(modal);
+            document.body.appendChild(backdrop);
+        }
+    </script>
+</body>
+</html>
