@@ -561,7 +561,7 @@
                                 </svg>
                             </button>
                             <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700 text-sm">
-                                Napisz do nas na <a href="/cdn-cgi/l/email-protection#90e0fffdf5fcfffdf1e2fbf5e4f9fef7f1fef4e3fff6e4d0f7fdf1f9fcbef3fffd" class="text-purple-600 hover:underline font-semibold"><span class="__cf_email__" data-cfemail="acdcc3c1c9c0c3c1cddec7c9d8c5c2cbcdc2c8dfc3cad8eccbc1cdc5c082cfc3c1">[email&#160;protected]</span></a>
+                                Napisz do nas na <a href="mailto:pomelomarketingandsoft@gmail.com" class="text-purple-600 hover:underline font-semibold">pomelomarketingandsoft@gmail.com</a>
                             </div>
                         </div>
                     </div>
@@ -600,15 +600,20 @@
         </button>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+    <script>
         let auditData = {};
         let exitPopupShown = false;
         
         // === START AUDIT ===
         function startAudit() {
+            console.log('=== START AUDIT CALLED ===');
             const email = document.getElementById('emailInput').value;
             const url = document.getElementById('urlInput').value;
             const honeypot = document.getElementById('websiteField').value;
+            console.log('Email:', email);
+            console.log('URL:', url);
+            console.log('Honeypot:', honeypot);
             
             if (honeypot) {
                 console.log('Bot detected');
@@ -616,23 +621,28 @@
             }
             
             if (!email || !url) {
+                console.log('Validation failed: empty fields');
                 showModal('Wypełnij wszystkie pola');
                 return;
             }
             
             if (!email.includes('@')) {
+                console.log('Validation failed: invalid email');
                 showModal('Podaj prawidłowy email');
                 return;
             }
             
             if (!url.startsWith('http')) {
+                console.log('Validation failed: invalid URL');
                 showModal('URL musi zaczynać się od https://');
                 return;
             }
             
+            console.log('=== SWITCHING SCREENS ===');
             document.getElementById('screen1').classList.remove('active');
             document.getElementById('screen2').classList.add('active');
             document.getElementById('analyzingUrl').textContent = url;
+            console.log('=== STARTING ANALYSIS ===');
             runAnalysis(email, url);
         }
         
