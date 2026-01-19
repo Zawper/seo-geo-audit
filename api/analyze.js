@@ -239,13 +239,20 @@ function calculateScore(data) {
 }
 
 // === SEND EMAIL ===
-
-  async function sendEmailReport(email, url, data) {
+async function sendEmailReport(email, url, data) {
   console.log('===== EMAIL DEBUG START =====');
   console.log('Recipient:', email);
   console.log('URL:', url);
+  console.log('Score:', data.score);
   console.log('GMAIL_USER:', process.env.GMAIL_USER ? 'SET' : 'NOT SET');
   console.log('GMAIL_APP_PASSWORD:', process.env.GMAIL_APP_PASSWORD ? 'SET (length: ' + process.env.GMAIL_APP_PASSWORD.length + ')' : 'NOT SET');
+  
+  // ⚠️ WAŻNE: Sprawdź czy zmienne środowiskowe są ustawione
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.error('❌ BŁĄD: Brak zmiennych środowiskowych GMAIL_USER lub GMAIL_APP_PASSWORD!');
+    console.log('Ustaw je w Vercel Dashboard → Settings → Environment Variables');
+    return; // Nie wysyłaj emaila jeśli brak konfiguracji
+  }
   
   const nodemailer = require('nodemailer');
   
@@ -260,15 +267,6 @@ function calculateScore(data) {
     !data.geminiCitation,
     !data.schemaMarkup
   ].filter(Boolean).length;
-  
-  const expiryDate = new Date();
-  expiryDate.setHours(expiryDate.getHours() + 24);
-  const expiryTime = expiryDate.toLocaleString('pl-PL', { 
-    day: 'numeric', 
-    month: 'long', 
-    hour: '2-digit', 
-    minute: '2-digit' 
-  });
   
   const emailHtml = `
     <!DOCTYPE html>
@@ -359,7 +357,7 @@ function calculateScore(data) {
           <p><strong>${totalProblems} problemów</strong> wymaga naprawy.</p>
           <p style="text-align: center; margin: 30px 0;">
             <a href="mailto:pomelomarketingandsoft@gmail.com?subject=Raport dla ${encodeURIComponent(url)}" class="cta-button">
-              Odblokuj pełny raport za 12€
+              Odblokuj pełny raport za 19 zł
             </a>
           </p>
         </div>
@@ -369,10 +367,7 @@ function calculateScore(data) {
   `;
   
   try {
-console.log('Email sent successfully to:', email);
-    console.log('===== EMAIL DEBUG END =====');
-    
-    
+    // ✅ POPRAWNA KOLEJNOŚĆ: Najpierw utwórz transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -381,6 +376,7 @@ console.log('Email sent successfully to:', email);
       }
     });
     
+    // ✅ Następnie wyślij email
     await transporter.sendMail({
       from: `"Pomelo SEO/GEO" <${process.env.GMAIL_USER}>`,
       to: email,
@@ -388,8 +384,13 @@ console.log('Email sent successfully to:', email);
       html: emailHtml
     });
     
-    console.log('Email sent successfully to:', email);
+    // ✅ Dopiero teraz loguj sukces
+    console.log('✅ Email sent successfully to:', email);
+    console.log('===== EMAIL DEBUG END =====');
+    
   } catch (error) {
-    console.error('Email send error:', error);
+    console.error('❌ Email send error:', error);
+    console.error('Error details:', error.message);
+    console.log('===== EMAIL DEBUG END =====');
   }
 }
