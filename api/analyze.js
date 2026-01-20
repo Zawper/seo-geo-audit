@@ -1,4 +1,5 @@
 // api/analyze.js
+import nodemailer from 'nodemailer';
 
 const requestLog = {};
 
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
   const { email, url } = req.body;
 
   // === RATE LIMITING ===
-  const clientIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const clientIP = req.headers['x-forwarded-for'] || req.connection?.remoteAddress || 'unknown';
   const now = Date.now();
   
   Object.keys(requestLog).forEach(ip => {
@@ -74,8 +75,12 @@ export default async function handler(req, res) {
 
     console.log('Audit complete:', auditData);
 
-    // Send email with results
-    await sendEmailReport(email, url, auditData);
+    // Send email with results (nie blokuj odpowiedzi jeśli email się nie wyśle)
+    try {
+      await sendEmailReport(email, url, auditData);
+    } catch (emailError) {
+      console.error('Email sending failed but continuing:', emailError.message);
+    }
 
     return res.status(200).json(auditData);
 
@@ -251,10 +256,8 @@ async function sendEmailReport(email, url, data) {
   if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
     console.error('❌ BŁĄD: Brak zmiennych środowiskowych GMAIL_USER lub GMAIL_APP_PASSWORD!');
     console.log('Ustaw je w Vercel Dashboard → Settings → Environment Variables');
-    return; // Nie wysyłaj emaila jeśli brak konfiguracji
+    throw new Error('Missing email configuration');
   }
-  
-  const nodemailer = require('nodemailer');
   
   const statusEmoji = data.score >= 70 ? '🟢' : data.score >= 40 ? '🟡' : '🔴';
   const statusText = data.score >= 70 ? 'DOBRA' : data.score >= 40 ? 'ŚREDNIA' : 'NISKA';
@@ -367,7 +370,7 @@ async function sendEmailReport(email, url, data) {
   `;
   
   try {
-    // ✅ POPRAWNA KOLEJNOŚĆ: Najpierw utwórz transporter
+    // ✅ Utwórz transporter
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -376,21 +379,24 @@ async function sendEmailReport(email, url, data) {
       }
     });
     
-    // ✅ Następnie wyślij email
-    await transporter.sendMail({
+    // ✅ Wyślij email
+    const info = await transporter.sendMail({
       from: `"Pomelo SEO/GEO" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: `${statusEmoji} Wynik: ${data.score}% - ${totalProblems} problemów`,
       html: emailHtml
     });
     
-    // ✅ Dopiero teraz loguj sukces
     console.log('✅ Email sent successfully to:', email);
+    console.log('Message ID:', info.messageId);
     console.log('===== EMAIL DEBUG END =====');
+    
+    return info;
     
   } catch (error) {
     console.error('❌ Email send error:', error);
     console.error('Error details:', error.message);
     console.log('===== EMAIL DEBUG END =====');
+    throw error;
   }
 }
