@@ -244,20 +244,22 @@ function calculateScore(data) {
 }
 
 // === SEND EMAIL ===
+// === SEND EMAIL ===
 async function sendEmailReport(email, url, data) {
   console.log('===== EMAIL DEBUG START =====');
   console.log('Recipient:', email);
   console.log('URL:', url);
   console.log('Score:', data.score);
-  console.log('GMAIL_USER:', process.env.GMAIL_USER ? 'SET' : 'NOT SET');
-  console.log('GMAIL_APP_PASSWORD:', process.env.GMAIL_APP_PASSWORD ? 'SET (length: ' + process.env.GMAIL_APP_PASSWORD.length + ')' : 'NOT SET');
+  console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY ? 'SET' : 'NOT SET');
   
-  // ⚠️ WAŻNE: Sprawdź czy zmienne środowiskowe są ustawione
-  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
-    console.error('❌ BŁĄD: Brak zmiennych środowiskowych GMAIL_USER lub GMAIL_APP_PASSWORD!');
-    console.log('Ustaw je w Vercel Dashboard → Settings → Environment Variables');
+  if (!process.env.RESEND_API_KEY) {
+    console.error('❌ BŁĄD: Brak zmiennej RESEND_API_KEY!');
+    console.log('Ustaw ją w Vercel Dashboard → Settings → Environment Variables');
     throw new Error('Missing email configuration');
   }
+  
+  const { Resend } = await import('resend');
+  const resend = new Resend(process.env.RESEND_API_KEY);
   
   const statusEmoji = data.score >= 70 ? '🟢' : data.score >= 40 ? '🟡' : '🔴';
   const statusText = data.score >= 70 ? 'DOBRA' : data.score >= 40 ? 'ŚREDNIA' : 'NISKA';
@@ -370,28 +372,22 @@ async function sendEmailReport(email, url, data) {
   `;
   
   try {
-    // ✅ Utwórz transporter
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD
-      }
-    });
-    
-    // ✅ Wyślij email
-    const info = await transporter.sendMail({
-      from: `"Pomelo SEO/GEO" <${process.env.GMAIL_USER}>`,
-      to: email,
+    const { data: emailData, error } = await resend.emails.send({
+      from: 'Pomelo SEO/GEO <onboarding@resend.dev>', // Zmień po weryfikacji domeny
+      to: [email],
       subject: `${statusEmoji} Wynik: ${data.score}% - ${totalProblems} problemów`,
-      html: emailHtml
+      html: emailHtml,
     });
+
+    if (error) {
+      throw error;
+    }
     
     console.log('✅ Email sent successfully to:', email);
-    console.log('Message ID:', info.messageId);
+    console.log('Email ID:', emailData.id);
     console.log('===== EMAIL DEBUG END =====');
     
-    return info;
+    return emailData;
     
   } catch (error) {
     console.error('❌ Email send error:', error);
@@ -400,3 +396,8 @@ async function sendEmailReport(email, url, data) {
     throw error;
   }
 }
+```
+
+**KROK 3:** Ustaw w Vercel:
+```
+RESEND_API_KEY = re_twoj_klucz_z_resend_com
