@@ -942,8 +942,8 @@
             const problems = [];
             
             if (data.pageSpeed < 60) {
-    const loadTimeLoss = Math.round(680 * (data.loadTime / 4.2)); // Zmniejszone o 60%
-    const viewsLost = Math.round(loadTimeLoss * 2); // Zmniejszone o 60%
+    const loadTimeLoss = Math.round(1700 * (data.loadTime / 4.2));
+    const viewsLost = Math.round(loadTimeLoss * 5);
                 problems.push({
                     title: `Strona ładuje się ${data.loadTime}s`,
                     loss: loadTimeLoss.toLocaleString('pl-PL'),
@@ -954,30 +954,30 @@
             }
             
             if (!data.chatGPTCitation || !data.geminiCitation) {
-                problems.push({
-                    title: 'ChatGPT/Gemini nie znają Twojej firmy',
-                    loss: '520',
-                    views: '2,600',
+    problems.push({
+        title: 'ChatGPT/Gemini nie znają Twojej firmy',
+        loss: '1,300',
+        views: '6,500',
                     fixTime: '2-3 tygodnie',
                     description: 'AI asystenci mają dostęp do milionów użytkowników dziennie. Brak widoczności w AI oznacza utratę całej grupy klientów, którzy pytają AI zamiast Google.'
                 });
             }
             
             if (!data.mobileFriendly) {
-                problems.push({
-                    title: 'Strona nie działa dobrze na telefonach',
-                    loss: '416',
-                    views: '2,060',
+    problems.push({
+        title: 'Strona nie działa dobrze na telefonach',
+        loss: '1,040',
+        views: '5,200',
                     fixTime: '1 tydzień',
                     description: 'Ponad 70% użytkowników przegląda internet na telefonach. Strona, która źle działa na mobile, traci większość potencjalnych klientów.'
                 });
             }
             
             if (!data.schemaMarkup) {
-                problems.push({
-                    title: 'Brak Schema Markup',
-                    loss: '340',
-                    views: '1,520',
+    problems.push({
+        title: 'Brak Schema Markup',
+        loss: '760',
+        views: '3,800',
                     fixTime: '3-5 dni',
                     description: 'Schema Markup to język, którym Google i AI rozumieją Twoją stronę. Bez niego Twoja strona jest jak książka bez spisu treści - trudna do zrozumienia.'
                 });
