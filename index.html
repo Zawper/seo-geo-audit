@@ -537,7 +537,7 @@
                                 </svg>
                             </button>
                             <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700 text-sm">
-                                Raport za 12€ jest jednorazowy. Pakiet BASIC obejmuje comiesięczne raporty z postępów.
+                                Raport za 19 zł jest jednorazowy. Pakiet BASIC obejmuje comiesięczne raporty z postępów.
                             </div>
                         </div>
                         
@@ -584,7 +584,7 @@
                     </div>
                     
                     <p class="text-sm opacity-75">
-                        📧 Raport wysłany też na: <span id="userEmailFinal" class="font-semibold"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="512422342311343c30383d7f213d">[email&#160;protected]</a></span>
+                        📧 Raport wysłany też na: <span id="userEmailFinal" class="font-semibold">twoj@email.pl</span>
                     </p>
                 </div>
                 
@@ -834,7 +834,7 @@
         
         // === CALCULATE LOSS ===
         function calculateLoss(score, loadTime) {
-            const avgValue = 10; // Zmniejszone z 50 do 10 (o 80%)
+            const avgValue = 10;
             const traffic = 1000;
             const baseConversion = 0.03;
             const loss = (100 - score) / 100;
@@ -942,8 +942,8 @@
             const problems = [];
             
             if (data.pageSpeed < 60) {
-                const loadTimeLoss = Math.round(1700 * (data.loadTime / 4.2)); // Zmniejszone o 80% (z 8500 do 1700)
-                const viewsLost = Math.round(loadTimeLoss * 5); // Wyświetlenia zamiast klientów
+                const loadTimeLoss = Math.round(1700 * (data.loadTime / 4.2));
+                const viewsLost = Math.round(loadTimeLoss * 5);
                 problems.push({
                     title: `Strona ładuje się ${data.loadTime}s`,
                     loss: loadTimeLoss.toLocaleString('pl-PL'),
@@ -956,7 +956,7 @@
             if (!data.chatGPTCitation || !data.geminiCitation) {
                 problems.push({
                     title: 'ChatGPT/Gemini nie znają Twojej firmy',
-                    loss: '1,300', // Zmniejszone o 80% (z 6500 do 1300)
+                    loss: '1,300',
                     views: '6,500',
                     fixTime: '2-3 tygodnie',
                     description: 'AI asystenci mają dostęp do milionów użytkowników dziennie. Brak widoczności w AI oznacza utratę całej grupy klientów, którzy pytają AI zamiast Google.'
@@ -966,7 +966,7 @@
             if (!data.mobileFriendly) {
                 problems.push({
                     title: 'Strona nie działa dobrze na telefonach',
-                    loss: '1,040', // Zmniejszone o 80% (z 5200 do 1040)
+                    loss: '1,040',
                     views: '5,200',
                     fixTime: '1 tydzień',
                     description: 'Ponad 70% użytkowników przegląda internet na telefonach. Strona, która źle działa na mobile, traci większość potencjalnych klientów.'
@@ -976,7 +976,7 @@
             if (!data.schemaMarkup) {
                 problems.push({
                     title: 'Brak Schema Markup',
-                    loss: '760', // Zmniejszone o 80% (z 3800 do 760)
+                    loss: '760',
                     views: '3,800',
                     fixTime: '3-5 dni',
                     description: 'Schema Markup to język, którym Google i AI rozumieją Twoją stronę. Bez niego Twoja strona jest jak książka bez spisu treści - trudna do zrozumienia.'
@@ -1009,10 +1009,6 @@
                     <button onclick="selectPackage('basic')" 
                             class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition">
                         Naprawmy to →
-                    </button>
-                </div>
-            `).join('');
-        }
                     </button>
                 </div>
             `).join('');
@@ -1082,7 +1078,7 @@
                     <div class="text-4xl mb-4">⚠️</div>
                     <p class="text-lg text-gray-800 mb-6">${message}</p>
                     <button onclick="this.closest('.fixed').remove()" 
-                                                     class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg">
+                            class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-lg transition shadow-lg">
                         OK
                     </button>
                 </div>
