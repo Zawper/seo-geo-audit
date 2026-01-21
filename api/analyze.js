@@ -1,5 +1,4 @@
 // api/analyze.js
-import nodemailer from 'nodemailer';
 
 const requestLog = {};
 
