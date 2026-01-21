@@ -243,7 +243,6 @@ function calculateScore(data) {
 }
 
 // === SEND EMAIL ===
-// === SEND EMAIL ===
 async function sendEmailReport(email, url, data) {
   console.log('===== EMAIL DEBUG START =====');
   console.log('Recipient:', email);
@@ -253,7 +252,6 @@ async function sendEmailReport(email, url, data) {
   
   if (!process.env.RESEND_API_KEY) {
     console.error('❌ BŁĄD: Brak zmiennej RESEND_API_KEY!');
-    console.log('Ustaw ją w Vercel Dashboard → Settings → Environment Variables');
     throw new Error('Missing email configuration');
   }
   
@@ -273,106 +271,106 @@ async function sendEmailReport(email, url, data) {
   ].filter(Boolean).length;
   
   const emailHtml = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <style>
-        body { 
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; 
-          line-height: 1.6; 
-          color: #1f2937; 
-          margin: 0;
-          padding: 0;
-          background: #f3f4f6;
-        }
-        .container { 
-          max-width: 600px; 
-          margin: 40px auto; 
-          background: white;
-          border-radius: 16px;
-          overflow: hidden;
-          box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        .header { 
-          background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%); 
-          color: white; 
-          padding: 40px 30px; 
-          text-align: center;
-        }
-        .header h1 { margin: 0 0 10px 0; font-size: 28px; }
-        .score-circle {
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.2);
-          margin: 20px auto;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 42px;
-          font-weight: bold;
-          border: 4px solid rgba(255,255,255,0.3);
-        }
-        .content { padding: 40px 30px; }
-        .metric-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 15px;
-          margin: 25px 0;
-        }
-        .metric-box {
-          background: #f9fafb;
-          padding: 15px;
-          border-radius: 8px;
-          border-left: 3px solid #e5e7eb;
-        }
-        .metric-box.good { border-left-color: #10b981; }
-        .metric-box.bad { border-left-color: #ef4444; }
-        .cta-button { 
-          background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-          color: white; 
-          padding: 16px 32px; 
-          text-decoration: none; 
-          border-radius: 8px; 
-          display: inline-block; 
-          font-weight: bold;
-          font-size: 16px;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="container">
-        <div class="header">
-          <h1>🚀 Twój Audyt SEO/GEO</h1>
-          <div class="score-circle">${data.score}%</div>
-          <p>Widoczność: ${statusEmoji} ${statusText}</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; 
+      line-height: 1.6; 
+      color: #1f2937; 
+      margin: 0;
+      padding: 0;
+      background: #f3f4f6;
+    }
+    .container { 
+      max-width: 600px; 
+      margin: 40px auto; 
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .header { 
+      background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%); 
+      color: white; 
+      padding: 40px 30px; 
+      text-align: center;
+    }
+    .header h1 { margin: 0 0 10px 0; font-size: 28px; }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: bold;
+      border: 4px solid rgba(255,255,255,0.3);
+    }
+    .content { padding: 40px 30px; }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 25px 0;
+    }
+    .metric-box {
+      background: #f9fafb;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 3px solid #e5e7eb;
+    }
+    .metric-box.good { border-left-color: #10b981; }
+    .metric-box.bad { border-left-color: #ef4444; }
+    .cta-button { 
+      background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+      color: white; 
+      padding: 16px 32px; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      display: inline-block; 
+      font-weight: bold;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚀 Twój Audyt SEO/GEO</h1>
+      <div class="score-circle">${data.score}%</div>
+      <p>Widoczność: ${statusEmoji} ${statusText}</p>
+    </div>
+    <div class="content">
+      <h2>📊 Wyniki dla ${url}</h2>
+      <div class="metric-grid">
+        <div class="metric-box ${data.pageSpeed >= 60 ? 'good' : 'bad'}">
+          PageSpeed: ${data.pageSpeed}%
         </div>
-        <div class="content">
-          <h2>📊 Wyniki dla ${url}</h2>
-          <div class="metric-grid">
-            <div class="metric-box ${data.pageSpeed >= 60 ? 'good' : 'bad'}">
-              PageSpeed: ${data.pageSpeed}%
-            </div>
-            <div class="metric-box ${data.loadTime < 3 ? 'good' : 'bad'}">
-              Czas: ${data.loadTime}s
-            </div>
-          </div>
-          <p><strong>${totalProblems} problemów</strong> wymaga naprawy.</p>
-          <p style="text-align: center; margin: 30px 0;">
-            <a href="mailto:pomelomarketingandsoft@gmail.com?subject=Raport dla ${encodeURIComponent(url)}" class="cta-button">
-              Odblokuj pełny raport za 19 zł
-            </a>
-          </p>
+        <div class="metric-box ${data.loadTime < 3 ? 'good' : 'bad'}">
+          Czas: ${data.loadTime}s
         </div>
       </div>
-    </body>
-    </html>
+      <p><strong>${totalProblems} problemów</strong> wymaga naprawy.</p>
+      <p style="text-align: center; margin: 30px 0;">
+        <a href="mailto:pomelomarketingandsoft@gmail.com?subject=Raport%20dla%20${encodeURIComponent(url)}" class="cta-button">
+          Odblokuj pełny raport za 19 zł
+        </a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>
   `;
   
   try {
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Pomelo SEO/GEO <onboarding@resend.dev>', // Zmień po weryfikacji domeny
+      from: 'Pomelo SEO/GEO <onboarding@resend.dev>',
       to: [email],
       subject: `${statusEmoji} Wynik: ${data.score}% - ${totalProblems} problemów`,
       html: emailHtml,
@@ -395,8 +393,3 @@ async function sendEmailReport(email, url, data) {
     throw error;
   }
 }
-```
-
-**KROK 3:** Ustaw w Vercel:
-```
-RESEND_API_KEY = re_twoj_klucz_z_resend_com
