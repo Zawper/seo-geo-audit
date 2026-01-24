@@ -1,4 +1,5 @@
 // api/analyze.js
+import { Resend } from 'resend';
 
 const requestLog = {};
 
@@ -74,12 +75,8 @@ export default async function handler(req, res) {
 
     console.log('Audit complete:', auditData);
 
-    // Send email with results (nie blokuj odpowiedzi jeśli email się nie wyśle)
-    try {
-      await sendEmailReport(email, url, auditData);
-    } catch (emailError) {
-      console.error('Email sending failed but continuing:', emailError.message);
-    }
+    // Send email with results
+    await sendEmailReport(email, url, auditData);
 
     return res.status(200).json(auditData);
 
@@ -271,8 +268,7 @@ async function sendEmailReport(email, url, data) {
     console.error('❌ BŁĄD: Brak zmiennej RESEND_API_KEY!');
     throw new Error('Missing email configuration');
   }
-  
-  const { Resend } = await import('resend');
+
   const resend = new Resend(process.env.RESEND_API_KEY);
   
   const statusEmoji = data.score >= 70 ? '🟢' : data.score >= 40 ? '🟡' : '🔴';
@@ -552,15 +548,16 @@ async function sendEmailReport(email, url, data) {
     });
 
     if (error) {
+      console.error('❌ Resend API error:', error);
       throw error;
     }
-    
+
     console.log('✅ Email sent successfully to:', email);
-    console.log('Email ID:', emailData.id);
+    console.log('Email ID:', emailData?.id);
     console.log('===== EMAIL DEBUG END =====');
-    
+
     return emailData;
-    
+
   } catch (error) {
     console.error('❌ Email send error:', error);
     console.error('Error details:', error.message);
