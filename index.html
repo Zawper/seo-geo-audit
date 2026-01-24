@@ -245,16 +245,11 @@
                 
                 <!-- SEKCJA 2: Quick Summary -->
                 <div class="mb-8">
-                    <button onclick="toggleTechnicalDetails()" 
-                            class="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition duration-200">
-                        <span class="text-lg font-bold text-gray-800">📊 SZCZEGÓŁY TECHNICZNE</span>
-                        <svg id="detailsChevron" class="w-6 h-6 text-gray-600 transition-transform duration-200" 
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    
-                    <div id="technicalDetails" class="hidden mt-4 grid md:grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <h3 class="text-lg font-bold text-gray-800">📊 SZCZEGÓŁY TECHNICZNE</h3>
+                    </div>
+
+                    <div id="technicalDetails" class="mt-4 grid md:grid-cols-2 gap-4">
                         <div id="detail-https" class="flex items-start p-4 bg-gray-50 rounded-lg">
                             <span class="text-2xl mr-3 flex-shrink-0">✅</span>
                             <div>
@@ -321,10 +316,10 @@
                         </h3>
                         
                         <div class="flex items-center justify-center gap-4 mb-6">
-                            <span class="text-3xl text-gray-400 line-through">49 zł</span>
-                            <span class="text-5xl font-bold text-purple-600">19 zł</span>
+                            <span class="text-3xl text-gray-400 line-through">149 zł</span>
+                            <span class="text-5xl font-bold text-purple-600">99 zł</span>
                             <span class="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
-                                -60% TYLKO DZIŚ!
+                                -33% TYLKO DZIŚ!
                             </span>
                         </div>
                     </div>
@@ -358,9 +353,9 @@
                         </ul>
                     </div>
                     
-                    <button onclick="buyFullReport()" 
+                    <button onclick="buyFullReport()"
                             class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition duration-200 transform hover:scale-105 shadow-2xl mb-4">
-                        🔥 KUP TERAZ ZA 19 ZŁ
+                        🔥 KUP TERAZ ZA 99 ZŁ
                     </button>
                     
                     <div class="flex items-center justify-center gap-6 text-sm text-gray-600">
@@ -429,85 +424,51 @@
                     </div>
                 </div>
 
-                <!-- SEKCJA 6: Pakiety -->
-                <div class="mb-12">
-                    <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
-                        💼 WOLISZ ABYŚMY TO NAPRAWILI ZA CIEBIE?
-                    </h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="border-2 border-purple-500 rounded-2xl p-6 hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-white">
-                            <div class="text-center mb-6">
-                                <span class="text-4xl mb-3 block">📦</span>
-                                <h4 class="text-2xl font-bold text-purple-600 mb-2">BASIC SEO/GEO</h4>
-                                <p class="text-sm text-gray-600">Kompleksowa naprawa widoczności</p>
-                            </div>
-                            
-                            <ul class="space-y-2 mb-6 text-sm text-gray-700">
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Optymalizacja PageSpeed</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Wdrożenie Schema Markup</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>AI visibility boost (ChatGPT + Gemini)</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Raport miesięczny z postępów</span>
-                                </li>
-                            </ul>
-                            
-                            <div class="text-center mb-4">
-                                <p class="text-4xl font-bold text-gray-800 mb-2">400 zł<span class="text-lg text-gray-600">/mies</span></p>
-                            </div>
-                            
-                            <button onclick="scrollToPackages()" 
-        class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition">
-    Naprawmy to →
-</button>
-                        </div>
-                        
-                        <div class="border-2 border-pink-500 rounded-2xl p-6 hover:shadow-2xl transition duration-300 transform hover:scale-105 bg-gradient-to-br from-pink-50 to-fuchsia-50">
-                            <div class="text-center mb-6">
-                                <span class="text-4xl mb-3 block">🚀</span>
-                                <h4 class="text-2xl font-bold text-pink-600 mb-2">PRO MARKETING</h4>
-                                <p class="text-sm text-gray-600">Kompleksowa strategia wzrostu</p>
-                            </div>
-                            
-                            <ul class="space-y-2 mb-6 text-sm text-gray-700">
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span><strong>Wszystko z BASIC</strong> +</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Content marketing</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Kampanie reklamowe</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="text-green-500 mr-2">✓</span>
-                                    <span>Dedykowany marketing manager</span>
-                                </li>
-                            </ul>
-                            
-                            <div class="text-center mb-4">
-                                <p class="text-2xl font-bold text-gray-800 mb-2">Indywidualna wycena</p>
-                            </div>
-                            
-                            <button onclick="selectPackage('pro')" 
-                                    class="w-full bg-gradient-to-r from-pink-600 to-fuchsia-600 hover:from-pink-700 hover:to-fuchsia-700 text-white font-bold py-3 rounded-lg transition shadow-lg">
-                                UMÓW KONSULTACJĘ
-                            </button>
-                        </div>
+                <!-- SEKCJA 6: Konsultacja -->
+                <div class="mb-12 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 border-2 border-purple-200">
+                    <div class="text-center mb-6">
+                        <span class="text-5xl mb-4 block">💼</span>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+                            Wolisz abyśmy to wdrożyli za Ciebie?
+                        </h3>
+                        <p class="text-gray-600 mb-6">
+                            Umów bezpłatną konsultację i poznaj nasze rozwiązania wdrożeniowe
+                        </p>
                     </div>
+
+                    <div class="bg-white rounded-xl p-6 mb-6">
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">✓</span>
+                                <span><strong>Kompleksowa optymalizacja PageSpeed</strong> - profesjonalne przyspieszenie strony</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">✓</span>
+                                <span><strong>Wdrożenie Schema Markup</strong> - poprawione rozumienie przez Google i AI</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">✓</span>
+                                <span><strong>AI Visibility Boost</strong> - zwiększenie widoczności w ChatGPT i Gemini</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">✓</span>
+                                <span><strong>Content Marketing</strong> - strategia treści zwiększająca zasięgi</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-2xl mr-3">✓</span>
+                                <span><strong>Raporty miesięczne</strong> - śledzenie postępów i ROI</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="selectPackage('consultation')"
+                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition duration-200 transform hover:scale-105 shadow-2xl">
+                        📞 UMÓW BEZPŁATNĄ KONSULTACJĘ
+                    </button>
+
+                    <p class="text-center text-sm text-gray-600 mt-4">
+                        Indywidualna wycena dostosowana do Twoich potrzeb
+                    </p>
                 </div>
 
                 <!-- SEKCJA 7: FAQ -->
@@ -573,13 +534,13 @@
                     <p class="text-lg mb-6 opacity-90">Zacznij naprawiać swoją widoczność już dziś</p>
                     
                     <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
-                        <button onclick="buyFullReport()" 
+                        <button onclick="buyFullReport()"
                                 class="bg-white text-purple-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
-                            📊 KUP RAPORT 19 ZŁ
+                            📊 KUP RAPORT 99 ZŁ
                         </button>
-                        <button onclick="selectPackage('basic')" 
+                        <button onclick="selectPackage('consultation')"
                                 class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
-                            💼 PAKIET 200€
+                            📞 KONSULTACJA
                         </button>
                     </div>
                     
@@ -594,9 +555,9 @@
 
     <!-- Sticky Mobile CTA -->
     <div id="stickyMobileCTA" class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-purple-500 p-4 md:hidden shadow-2xl z-40 hidden">
-        <button onclick="buyFullReport()" 
+        <button onclick="buyFullReport()"
                 class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-lg shadow-xl">
-            🔥 KUP RAPORT 19 ZŁ
+            🔥 KUP RAPORT 99 ZŁ
         </button>
     </div>
 
@@ -834,7 +795,7 @@
         
         // === CALCULATE LOSS ===
         function calculateLoss(score, loadTime) {
-            const avgValue = 10;
+            const avgValue = 35; // zwiększone z 10 do 35
             const traffic = 1000;
             const baseConversion = 0.03;
             const loss = (100 - score) / 100;
@@ -905,19 +866,17 @@
         function buyFullReport() {
             const email = document.getElementById('userEmailFinal').textContent;
             const url = document.getElementById('resultUrl').textContent;
-            
-            window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie raportu za 19 zł&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
+
+            window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie raportu za 99 zł&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
         }
         
         // === SELECT PACKAGE ===
         function selectPackage(type) {
             const email = document.getElementById('userEmailFinal').textContent;
             const url = document.getElementById('resultUrl').textContent;
-            
-            if (type === 'basic') {
-                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie BASIC SEO/GEO&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
-            } else if (type === 'pro') {
-                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Wycena PRO MARKETING&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
+
+            if (type === 'consultation') {
+                window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Konsultacja wdrożeniowa&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
             }
         }
         
@@ -1006,10 +965,6 @@
                             <span>Naprawa: <strong class="text-green-600">${problem.fixTime}</strong></span>
                         </p>
                     </div>
-                    <button onclick="selectPackage('basic')" 
-                            class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded-lg transition">
-                        Naprawmy to →
-                    </button>
                 </div>
             `).join('');
         }
@@ -1040,12 +995,12 @@
                         przez złą widoczność.
                     </p>
                     <p class="text-lg font-semibold text-purple-600 mb-6">
-                        Naprawmy to razem za tylko 19 zł
+                        Naprawmy to razem za tylko 99 zł
                     </p>
                     <div class="flex flex-col gap-3">
-                        <button onclick="buyFullReport(); document.getElementById('exitPopup').remove();" 
+                        <button onclick="buyFullReport(); document.getElementById('exitPopup').remove();"
                                 class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg transition shadow-lg">
-                            🔥 Kup raport za 19 zł
+                            🔥 Kup raport za 99 zł
                         </button>
                         <button onclick="document.getElementById('exitPopup').remove();" 
                                 class="text-gray-500 hover:text-gray-700 text-sm">
