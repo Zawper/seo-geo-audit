@@ -47,19 +47,20 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('Starting audit for:', url);
+    console.log(`Audit: ${url}`);
     
     // Run all checks in parallel
     const results = await Promise.all([
-      checkPageSpeed(url),
-      checkMobileFriendly(url),
+      checkPageSpeedAndMobile(url),
       checkHTTPS(url),
       checkChatGPT(url),
       checkGemini(url),
       checkSchema(url)
     ]);
 
-    const [pageSpeed, mobileFriendly, https, chatGPT, gemini, schema] = results;
+    const [pageSpeedAndMobile, https, chatGPT, gemini, schema] = results;
+    const pageSpeed = { score: pageSpeedAndMobile.score, loadTime: pageSpeedAndMobile.loadTime };
+    const mobileFriendly = { passed: pageSpeedAndMobile.isMobileFriendly };
 
     // Calculate score
     const auditData = {
@@ -73,7 +74,7 @@ export default async function handler(req, res) {
       schemaMarkup: schema.hasSchema
     };
 
-    console.log('Audit complete:', auditData);
+    console.log(`Audit complete: score=${auditData.score}`);
 
     // Send email with results (nie blokuj odpowiedzi jeśli email się nie wyśle)
     try {
@@ -90,50 +91,31 @@ export default async function handler(req, res) {
   }
 }
 
-// === PAGESPEED CHECK ===
-async function checkPageSpeed(url) {
+// === PAGESPEED + MOBILE CHECK (single API request) ===
+async function checkPageSpeedAndMobile(url) {
   const API_KEY = process.env.GOOGLE_API_KEY;
-  
+
   try {
     const response = await fetch(
       `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&category=performance&strategy=mobile`
     );
-    
+
     if (!response.ok) throw new Error('PageSpeed API failed');
-    
+
     const data = await response.json();
     const performanceScore = Math.round(data.lighthouseResult.categories.performance.score * 100);
     const speedIndex = data.lighthouseResult.audits['speed-index'].numericValue / 1000;
-    
+    const viewportAudit = data.lighthouseResult.audits['viewport'];
+    const isMobileFriendly = viewportAudit && viewportAudit.score === 1;
+
     return {
       score: performanceScore,
-      loadTime: parseFloat(speedIndex.toFixed(1))
+      loadTime: parseFloat(speedIndex.toFixed(1)),
+      isMobileFriendly
     };
   } catch (error) {
     console.error('PageSpeed error:', error);
-    return { score: 50, loadTime: 3.5 };
-  }
-}
-
-// === MOBILE-FRIENDLY CHECK (z PageSpeed) ===
-async function checkMobileFriendly(url) {
-  const API_KEY = process.env.GOOGLE_API_KEY;
-  
-  try {
-    const response = await fetch(
-      `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${API_KEY}&strategy=mobile`
-    );
-    
-    if (!response.ok) throw new Error('PageSpeed mobile API failed');
-    
-    const data = await response.json();
-    const viewportAudit = data.lighthouseResult.audits['viewport'];
-    const isMobileFriendly = viewportAudit && viewportAudit.score === 1;
-    
-    return { passed: isMobileFriendly };
-  } catch (error) {
-    console.error('Mobile-Friendly error:', error);
-    return { passed: true };
+    return { score: 50, loadTime: 3.5, isMobileFriendly: true };
   }
 }
 
@@ -200,7 +182,7 @@ async function checkGemini(url) {
   
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -233,10 +215,12 @@ async function checkSchema(url) {
     const html = await response.text();
     
     const hasJsonLd = html.includes('application/ld+json');
-    const hasOrgSchema = html.includes('"@type":"Organization"') || html.includes('"@type": "Organization"');
-    const hasLocalBusiness = html.includes('"@type":"LocalBusiness"') || html.includes('"@type": "LocalBusiness"');
-    
-    return { hasSchema: hasJsonLd && (hasOrgSchema || hasLocalBusiness) };
+    const schemaTypes = ['Organization', 'LocalBusiness', 'WebSite', 'Product', 'Service', 'FAQPage', 'Article', 'BreadcrumbList'];
+    const hasAnyType = schemaTypes.some(type =>
+      html.includes(`"@type":"${type}"`) || html.includes(`"@type": "${type}"`)
+    );
+
+    return { hasSchema: hasJsonLd && hasAnyType };
   } catch (error) {
     console.error('Schema check error:', error);
     return { hasSchema: false };
@@ -258,6 +242,16 @@ function calculateScore(data) {
   if (data.schema.hasSchema) score += 10;
   
   return Math.round(score);
+}
+
+// === CALCULATE TOTAL LOSS (for email) ===
+function calculateTotalLoss(data) {
+  let total = 0;
+  if (data.pageSpeed < 60) total += Math.round(1700 * (data.loadTime / 4.2));
+  if (!data.chatGPTCitation || !data.geminiCitation) total += 1300;
+  if (!data.mobileFriendly) total += 1040;
+  if (!data.schemaMarkup) total += 760;
+  return total;
 }
 
 // === SEND EMAIL ===
@@ -510,7 +504,7 @@ async function sendEmailReport(email, url, data) {
       <div class="warning-box">
         <h3 style="color: #ea580c; margin: 0 0 10px 0;">⚠️ Podsumowanie strat</h3>
         <p style="font-size: 24px; font-weight: bold; color: #991b1b; margin: 10px 0;">
-          Tracisz około ${Math.round(1000 + Math.random() * 200)} zł miesięcznie
+          Tracisz około ${calculateTotalLoss(data).toLocaleString('pl-PL')} zł miesięcznie
         </p>
         <p style="color: #6b7280; margin: 0;">
           w utraconych wyświetleniach i potencjalnych klientach

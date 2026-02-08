@@ -7,42 +7,30 @@ let exitPopupShown = false;
 
 // === START AUDIT ===
 function startAudit() {
-    console.log('=== START AUDIT CALLED ===');
     const email = document.getElementById('emailInput').value;
     const url = document.getElementById('urlInput').value;
     const honeypot = document.getElementById('websiteField').value;
-    console.log('Email:', email);
-    console.log('URL:', url);
-    console.log('Honeypot:', honeypot);
 
-    if (honeypot) {
-        console.log('Bot detected');
-        return;
-    }
+    if (honeypot) return;
 
     if (!email || !url) {
-        console.log('Validation failed: empty fields');
         showModal('Wypełnij wszystkie pola');
         return;
     }
 
     if (!email.includes('@')) {
-        console.log('Validation failed: invalid email');
         showModal('Podaj prawidłowy email');
         return;
     }
 
     if (!url.startsWith('http')) {
-        console.log('Validation failed: invalid URL');
         showModal('URL musi zaczynać się od https://');
         return;
     }
 
-    console.log('=== SWITCHING SCREENS ===');
     document.getElementById('screen1').classList.remove('active');
     document.getElementById('screen2').classList.add('active');
     document.getElementById('analyzingUrl').textContent = url;
-    console.log('=== STARTING ANALYSIS ===');
     runAnalysis(email, url);
 }
 
