@@ -144,33 +144,22 @@ function showResults(email, url, data) {
         },
         options: {
             cutout: '75%',
+            animation: { duration: 1000 },
             plugins: { legend: { display: false }, tooltip: { enabled: false } }
         },
         plugins: [{
+            id: 'centerText',
             beforeDraw: function(chart) {
                 const ctx = chart.ctx;
-                ctx.restore();
+                ctx.save();
 
-                // Większy, pogrubiony font
                 ctx.font = "bold " + (chart.height / 4).toFixed(2) + "px sans-serif";
                 ctx.textBaseline = "middle";
                 ctx.textAlign = "center";
-
-                const text = data.score + "%";
-                const x = chart.width / 2;
-                const y = chart.height / 2;
-
-                // Cień dla głębi
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetX = 3;
-                ctx.shadowOffsetY = 3;
-
-                // Biały tekst
                 ctx.fillStyle = '#ffffff';
-                ctx.fillText(text, x, y);
+                ctx.fillText(data.score + "%", chart.width / 2, chart.height / 2);
 
-                ctx.save();
+                ctx.restore();
             }
         }]
     });
