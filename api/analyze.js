@@ -404,13 +404,13 @@ async function sendEmailReport(email, url, data) {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🚀 Twój Audyt SEO/GEO</h1>
+      <h1>Twój Audyt SEO/GEO</h1>
       <div class="score-circle">${data.score}%</div>
       <p>Widoczność: ${statusEmoji} ${statusText}</p>
     </div>
 
     <div class="content">
-      <h2>📊 Wyniki dla ${url}</h2>
+      <h2>Wyniki dla ${url}</h2>
 
       <!-- Szczegóły techniczne -->
       <div class="section">
@@ -517,7 +517,7 @@ async function sendEmailReport(email, url, data) {
           <strong>Odblokuj pełny raport profesjonalny</strong> z planem naprawczym krok po kroku
         </p>
         <a href="mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie%20raportu%20za%2099%20zł&body=Email:%20${encodeURIComponent(email)}%0AStrona:%20${encodeURIComponent(url)}" class="cta-button">
-          🔥 Kup pełny raport za 99 zł
+          Kup pełny raport za 99 zł
         </a>
         <p style="font-size: 14px; color: #6b7280; margin-top: 15px;">
           ✓ 30+ metryk szczegółowych<br>
