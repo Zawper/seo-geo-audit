@@ -310,19 +310,19 @@ async function sendEmailReport(email, url, data) {
       text-align: center;
     }
     .header h1 { margin: 0 0 10px 0; font-size: 28px; }
+    
     .score-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 42px;
-      font-weight: bold;
-      border: 4px solid rgba(255,255,255,0.3);
-    }
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  margin: 20px auto;
+  font-size: 42px;
+  font-weight: bold;
+  border: 4px solid rgba(255,255,255,0.3);
+  text-align: center;
+  line-height: 112px;
+}
     .content { padding: 40px 30px; }
     .section { margin: 30px 0; }
     .section-title {
