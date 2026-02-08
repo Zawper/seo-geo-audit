@@ -1,5 +1,13 @@
 /* SEO-GEO Audit Tool - Custom Styles */
 /* Wydzielone z index.html dla lepszej organizacji kodu */
+/* Zaktualizowane: 2025-02-08 - Styl zgodny z pomelo.marketing */
+
+/* Globalne zmienne kolorów */
+:root {
+    --purple-primary: #9333ea;
+    --pink-primary: #ec4899;
+    --gradient-main: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+}
 
 /* Animacje */
 @keyframes spin {

@@ -75,8 +75,12 @@ export default async function handler(req, res) {
 
     console.log('Audit complete:', auditData);
 
-    // Send email with results
-    await sendEmailReport(email, url, auditData);
+    // Send email with results (nie blokuj odpowiedzi jeśli email się nie wyśle)
+    try {
+      await sendEmailReport(email, url, auditData);
+    } catch (emailError) {
+      console.error('Email sending failed but continuing:', emailError.message);
+    }
 
     return res.status(200).json(auditData);
 
