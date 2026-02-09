@@ -286,6 +286,7 @@ async function sendEmailReport(email, url, data) {
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
@@ -298,240 +299,274 @@ async function sendEmailReport(email, url, data) {
     .container {
       max-width: 600px;
       margin: 40px auto;
-      background: white;
-      border-radius: 16px;
+      background: #ffffff;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     }
     .header {
       background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-      color: white;
-      padding: 40px 30px;
+      color: #ffffff;
+      padding: 48px 32px;
       text-align: center;
     }
-    .header h1 { margin: 0 0 10px 0; font-size: 28px; }
-    .score-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 42px;
-      font-weight: bold;
-      border: 4px solid rgba(255,255,255,0.3);
+    .score {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin: 0;
+      line-height: 1;
     }
-    .content { padding: 40px 30px; }
-    .section { margin: 30px 0; }
-    .section-title {
-      font-size: 20px;
-      font-weight: bold;
-      color: #1f2937;
-      margin-bottom: 15px;
-      border-left: 4px solid #9333ea;
-      padding-left: 12px;
+    .header-url {
+      font-size: 14px;
+      opacity: 0.85;
+      margin: 16px 0 4px 0;
+      word-break: break-all;
     }
-    .metric-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin: 20px 0;
-    }
-    .metric-box {
-      background: #f9fafb;
-      padding: 15px;
-      border-radius: 8px;
-      border-left: 3px solid #e5e7eb;
-    }
-    .metric-box.good { border-left-color: #10b981; background: #f0fdf4; }
-    .metric-box.bad { border-left-color: #ef4444; background: #fef2f2; }
-    .metric-title { font-weight: bold; color: #374151; margin-bottom: 5px; }
-    .metric-value { font-size: 14px; color: #6b7280; }
-    .problem-box {
-      background: #fef2f2;
-      border-left: 4px solid #ef4444;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 8px;
-    }
-    .problem-title {
-      font-weight: bold;
-      color: #991b1b;
+    .header-status {
       font-size: 16px;
-      margin-bottom: 10px;
+      font-weight: 600;
+      margin: 4px 0 0 0;
+    }
+    .content {
+      padding: 40px 32px;
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0 0 20px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #9333ea;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+    .metric-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #374151;
+    }
+    .metric-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .good { color: #10b981; }
+    .bad { color: #ef4444; }
+    .problem-item {
+      padding: 20px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .problem-item:last-child {
+      border-bottom: none;
+    }
+    .problem-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0 0 6px 0;
     }
     .problem-desc {
       font-size: 14px;
       color: #6b7280;
-      margin-bottom: 10px;
-      font-style: italic;
+      margin: 0 0 12px 0;
     }
-    .problem-impact {
-      font-size: 14px;
+    .problem-detail {
+      font-size: 13px;
       color: #374151;
-      line-height: 1.8;
+      margin: 4px 0;
+    }
+    .loss-section {
+      text-align: center;
+      padding: 32px 0;
+    }
+    .loss-amount {
+      font-size: 32px;
+      font-weight: 800;
+      color: #1f2937;
+      margin: 0;
+    }
+    .loss-sub {
+      font-size: 14px;
+      color: #6b7280;
+      margin: 8px 0 0 0;
+    }
+    .cta-section {
+      text-align: center;
+      padding: 32px 0 0 0;
+    }
+    .cta-label {
+      font-size: 16px;
+      color: #374151;
+      margin: 0 0 20px 0;
     }
     .cta-button {
       background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
-      color: white;
-      padding: 16px 32px;
+      color: #ffffff;
+      padding: 16px 40px;
       text-decoration: none;
       border-radius: 8px;
       display: inline-block;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 16px;
-      margin: 10px 0;
     }
-    .warning-box {
-      background: #fff7ed;
-      border: 2px solid #fb923c;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 20px 0;
-      text-align: center;
+    .cta-features {
+      font-size: 13px;
+      color: #6b7280;
+      margin: 20px 0 0 0;
+      line-height: 2;
+    }
+    .cta-note {
+      font-size: 13px;
+      color: #9ca3af;
+      margin: 16px 0 0 0;
     }
     .footer {
       background: #f9fafb;
-      padding: 30px;
+      padding: 28px 32px;
       text-align: center;
-      font-size: 14px;
+      font-size: 13px;
       color: #6b7280;
+    }
+    .footer a {
+      color: #9333ea;
+      text-decoration: none;
+    }
+    .footer p {
+      margin: 4px 0;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 32px 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
+
     <div class="header">
-      <h1>🚀 Twój Audyt SEO/GEO</h1>
-      <div class="score-circle">${data.score}%</div>
-      <p>Widoczność: ${statusEmoji} ${statusText}</p>
+      <p class="score">${data.score}%</p>
+      <p class="header-url">${url}</p>
+      <p class="header-status">${statusEmoji} Widoczność: ${statusText}</p>
     </div>
 
     <div class="content">
-      <h2>📊 Wyniki dla ${url}</h2>
 
-      <!-- Szczegóły techniczne -->
-      <div class="section">
-        <div class="section-title">📋 Szczegóły Techniczne</div>
-        <div class="metric-grid">
-          <div class="metric-box ${data.pageSpeed >= 60 ? 'good' : 'bad'}">
-            <div class="metric-title">PageSpeed</div>
-            <div class="metric-value">${data.pageSpeed}/100</div>
-          </div>
-          <div class="metric-box ${data.loadTime < 3 ? 'good' : 'bad'}">
-            <div class="metric-title">Czas ładowania</div>
-            <div class="metric-value">${data.loadTime}s</div>
-          </div>
-          <div class="metric-box ${data.mobileFriendly ? 'good' : 'bad'}">
-            <div class="metric-title">Mobile-Friendly</div>
-            <div class="metric-value">${data.mobileFriendly ? '✅ Tak' : '❌ Nie'}</div>
-          </div>
-          <div class="metric-box ${data.https ? 'good' : 'bad'}">
-            <div class="metric-title">HTTPS</div>
-            <div class="metric-value">${data.https ? '✅ Tak' : '❌ Nie'}</div>
-          </div>
-          <div class="metric-box ${data.chatGPTCitation ? 'good' : 'bad'}">
-            <div class="metric-title">ChatGPT Visibility</div>
-            <div class="metric-value">${data.chatGPTCitation ? '✅ Widoczna' : '❌ Niewidoczna'}</div>
-          </div>
-          <div class="metric-box ${data.geminiCitation ? 'good' : 'bad'}">
-            <div class="metric-title">Gemini Visibility</div>
-            <div class="metric-value">${data.geminiCitation ? '✅ Widoczna' : '❌ Niewidoczna'}</div>
-          </div>
-          <div class="metric-box ${data.schemaMarkup ? 'good' : 'bad'}">
-            <div class="metric-title">Schema Markup</div>
-            <div class="metric-value">${data.schemaMarkup ? '✅ Wdrożone' : '❌ Brak'}</div>
-          </div>
+      <h2 class="section-title">Szczegóły techniczne</h2>
+
+      <div>
+        <div class="metric-row">
+          <span class="metric-name">PageSpeed</span>
+          <span class="metric-value ${data.pageSpeed >= 60 ? 'good' : 'bad'}">${data.pageSpeed}/100</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Czas ładowania</span>
+          <span class="metric-value ${data.loadTime < 3 ? 'good' : 'bad'}">${data.loadTime}s</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Mobile-Friendly</span>
+          <span class="metric-value ${data.mobileFriendly ? 'good' : 'bad'}">${data.mobileFriendly ? '✅ Tak' : '❌ Nie'}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">HTTPS</span>
+          <span class="metric-value ${data.https ? 'good' : 'bad'}">${data.https ? '✅ Tak' : '❌ Nie'}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">ChatGPT Visibility</span>
+          <span class="metric-value ${data.chatGPTCitation ? 'good' : 'bad'}">${data.chatGPTCitation ? '✅ Widoczna' : '❌ Niewidoczna'}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Gemini Visibility</span>
+          <span class="metric-value ${data.geminiCitation ? 'good' : 'bad'}">${data.geminiCitation ? '✅ Widoczna' : '❌ Niewidoczna'}</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">Schema Markup</span>
+          <span class="metric-value ${data.schemaMarkup ? 'good' : 'bad'}">${data.schemaMarkup ? '✅ Wdrożone' : '❌ Brak'}</span>
         </div>
       </div>
 
-      <!-- Główne problemy -->
-      <div class="section">
-        <div class="section-title">⚠️ Wykryte Problemy (${totalProblems})</div>
+      ${totalProblems > 0 ? `
+      <hr class="divider">
 
+      <h2 class="section-title">Wykryte problemy (${totalProblems})</h2>
+
+      <div>
         ${data.pageSpeed < 60 ? `
-        <div class="problem-box">
-          <div class="problem-title">Problem #1: Wolne ładowanie strony (${data.loadTime}s)</div>
-          <div class="problem-desc">Wolne ładowanie powoduje, że użytkownicy opuszczają stronę zanim się załaduje. Google karze wolne strony niższą pozycją.</div>
-          <div class="problem-impact">
-            📉 Możesz tracić: <strong>~${Math.round(1700 * (data.loadTime / 4.2)).toLocaleString('pl-PL')} zł/mies</strong><br>
-            👁️ To około: <strong>~${Math.round(1700 * (data.loadTime / 4.2) * 5).toLocaleString('pl-PL')} wyświetleń miesięcznie</strong><br>
-            ⏱️ Naprawa: <strong>1-2 tygodnie</strong>
-          </div>
+        <div class="problem-item">
+          <p class="problem-name">Wolne ładowanie strony (${data.loadTime}s)</p>
+          <p class="problem-desc">Wolne ładowanie powoduje, że użytkownicy opuszczają stronę zanim się załaduje. Google karze wolne strony niższą pozycją.</p>
+          <p class="problem-detail"><strong>Szacowane straty:</strong> ~${Math.round(1700 * (data.loadTime / 4.2)).toLocaleString('pl-PL')} zł/mies (~${Math.round(1700 * (data.loadTime / 4.2) * 5).toLocaleString('pl-PL')} wyświetleń)</p>
+          <p class="problem-detail"><strong>Naprawa:</strong> 1-2 tygodnie</p>
         </div>
         ` : ''}
 
         ${!data.chatGPTCitation || !data.geminiCitation ? `
-        <div class="problem-box">
-          <div class="problem-title">Problem #2: Brak widoczności w AI (ChatGPT/Gemini)</div>
-          <div class="problem-desc">AI asystenci mają dostęp do milionów użytkowników dziennie. Brak widoczności w AI oznacza utratę całej grupy klientów.</div>
-          <div class="problem-impact">
-            📉 Możesz tracić: <strong>~1,300 zł/mies</strong><br>
-            👁️ To około: <strong>~6,500 wyświetleń miesięcznie</strong><br>
-            ⏱️ Naprawa: <strong>2-3 tygodnie</strong>
-          </div>
+        <div class="problem-item">
+          <p class="problem-name">Brak widoczności w AI (ChatGPT/Gemini)</p>
+          <p class="problem-desc">AI asystenci mają dostęp do milionów użytkowników dziennie. Brak widoczności w AI oznacza utratę całej grupy klientów.</p>
+          <p class="problem-detail"><strong>Szacowane straty:</strong> ~1 300 zł/mies (~6 500 wyświetleń)</p>
+          <p class="problem-detail"><strong>Naprawa:</strong> 2-3 tygodnie</p>
         </div>
         ` : ''}
 
         ${!data.mobileFriendly ? `
-        <div class="problem-box">
-          <div class="problem-title">Problem #3: Słaba optymalizacja mobile</div>
-          <div class="problem-desc">Ponad 70% użytkowników przegląda internet na telefonach. Strona źle działająca na mobile traci większość klientów.</div>
-          <div class="problem-impact">
-            📉 Możesz tracić: <strong>~1,040 zł/mies</strong><br>
-            👁️ To około: <strong>~5,200 wyświetleń miesięcznie</strong><br>
-            ⏱️ Naprawa: <strong>1 tydzień</strong>
-          </div>
+        <div class="problem-item">
+          <p class="problem-name">Słaba optymalizacja mobile</p>
+          <p class="problem-desc">Ponad 70% użytkowników przegląda internet na telefonach. Strona źle działająca na mobile traci większość klientów.</p>
+          <p class="problem-detail"><strong>Szacowane straty:</strong> ~1 040 zł/mies (~5 200 wyświetleń)</p>
+          <p class="problem-detail"><strong>Naprawa:</strong> 1 tydzień</p>
         </div>
         ` : ''}
 
         ${!data.schemaMarkup ? `
-        <div class="problem-box">
-          <div class="problem-title">Problem #4: Brak Schema Markup</div>
-          <div class="problem-desc">Schema Markup to język, którym Google i AI rozumieją Twoją stronę. Bez niego trudniej uzyskać wysoką widoczność.</div>
-          <div class="problem-impact">
-            📉 Możesz tracić: <strong>~760 zł/mies</strong><br>
-            👁️ To około: <strong>~3,800 wyświetleń miesięcznie</strong><br>
-            ⏱️ Naprawa: <strong>3-5 dni</strong>
-          </div>
+        <div class="problem-item">
+          <p class="problem-name">Brak Schema Markup</p>
+          <p class="problem-desc">Schema Markup to język, którym Google i AI rozumieją Twoją stronę. Bez niego trudniej uzyskać wysoką widoczność.</p>
+          <p class="problem-detail"><strong>Szacowane straty:</strong> ~760 zł/mies (~3 800 wyświetleń)</p>
+          <p class="problem-detail"><strong>Naprawa:</strong> 3-5 dni</p>
         </div>
         ` : ''}
       </div>
+      ` : ''}
 
-      <!-- Ostrzeżenie o stratach -->
-      <div class="warning-box">
-        <h3 style="color: #ea580c; margin: 0 0 10px 0;">⚠️ Podsumowanie strat</h3>
-        <p style="font-size: 24px; font-weight: bold; color: #991b1b; margin: 10px 0;">
-          Tracisz około ${calculateTotalLoss(data).toLocaleString('pl-PL')} zł miesięcznie
-        </p>
-        <p style="color: #6b7280; margin: 0;">
-          w utraconych wyświetleniach i potencjalnych klientach
-        </p>
+      <hr class="divider">
+
+      <div class="loss-section">
+        <p class="loss-amount">~${calculateTotalLoss(data).toLocaleString('pl-PL')} zł/mies</p>
+        <p class="loss-sub">Szacowana łączna strata w utraconych wyświetleniach i potencjalnych klientach</p>
       </div>
 
-      <!-- CTA -->
-      <div style="text-align: center; margin: 40px 0;">
-        <p style="font-size: 18px; color: #374151; margin-bottom: 20px;">
-          <strong>Odblokuj pełny raport profesjonalny</strong> z planem naprawczym krok po kroku
-        </p>
+      <hr class="divider">
+
+      <div class="cta-section">
+        <p class="cta-label"><strong>Odblokuj pełny raport profesjonalny</strong> z planem naprawczym krok po kroku</p>
         <a href="mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie%20raportu%20za%2099%20zł&body=Email:%20${encodeURIComponent(email)}%0AStrona:%20${encodeURIComponent(url)}" class="cta-button">
-          🔥 Kup pełny raport za 99 zł
+          Zamów pełny raport &mdash; 99 zł
         </a>
-        <p style="font-size: 14px; color: #6b7280; margin-top: 15px;">
+        <p class="cta-features">
           ✓ 30+ metryk szczegółowych<br>
           ✓ Plan naprawczy krok po kroku<br>
           ✓ Analiza 3 konkurentów<br>
           ✓ Wycena kosztów wdrożenia
         </p>
+        <p class="cta-note">Raport gotowy do 7 dni od zamówienia</p>
       </div>
+
     </div>
 
     <div class="footer">
       <p><strong>Pomelo Marketing & Software</strong></p>
-      <p>Pytania? Napisz: pomelomarketingandsoft@gmail.com</p>
+      <p><a href="https://pomelo.marketing">pomelo.marketing</a></p>
+      <p>Pytania? <a href="mailto:pomelomarketingandsoft@gmail.com">pomelomarketingandsoft@gmail.com</a></p>
     </div>
+
   </div>
 </body>
 </html>
