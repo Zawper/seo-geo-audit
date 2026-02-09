@@ -574,7 +574,7 @@ async function sendEmailReport(email, url, data) {
   
   try {
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Pomelo SEO/GEO <noreply@pomelo.marketing>',
+      from: 'Pomelo SEO/GEO <noreply@seo.pomelo.marketing>',
       to: [email],
       subject: `${statusEmoji} Wynik: ${data.score}% - ${totalProblems} problemów`,
       html: emailHtml,
