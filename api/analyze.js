@@ -463,19 +463,19 @@ async function sendEmailReport(email, url, data) {
 
       <div>
         <div class="metric-row">
-          <span class="metric-name">PageSpeed</span>
+          <span class="metric-name">Szybkość strony</span>
           <span class="metric-value ${data.pageSpeed >= 60 ? 'good' : 'bad'}">${data.pageSpeed}/100</span>
         </div>
         <div class="metric-row">
-          <span class="metric-name">Czas ładowania</span>
+          <span class="metric-name">Czas ładowania strony</span>
           <span class="metric-value ${data.loadTime < 3 ? 'good' : 'bad'}">${data.loadTime}s</span>
         </div>
         <div class="metric-row">
-          <span class="metric-name">Mobile-Friendly</span>
+          <span class="metric-name">Widoczoność w urządzeniach mobilnych - Mobile-Friendly</span>
           <span class="metric-value ${data.mobileFriendly ? 'good' : 'bad'}">${data.mobileFriendly ? '✅ Tak' : '❌ Nie'}</span>
         </div>
         <div class="metric-row">
-          <span class="metric-name">HTTPS</span>
+          <span class="metric-name">Bezpieczeństwo strony - HTTPS</span>
           <span class="metric-value ${data.https ? 'good' : 'bad'}">${data.https ? '✅ Tak' : '❌ Nie'}</span>
         </div>
         <div class="metric-row">
@@ -487,7 +487,7 @@ async function sendEmailReport(email, url, data) {
           <span class="metric-value ${data.geminiCitation ? 'good' : 'bad'}">${data.geminiCitation ? '✅ Widoczna' : '❌ Niewidoczna'}</span>
         </div>
         <div class="metric-row">
-          <span class="metric-name">Schema Markup</span>
+          <span class="metric-name">Rozumienie twojej strony przez wyszukiwarki - Schema Markup</span>
           <span class="metric-value ${data.schemaMarkup ? 'good' : 'bad'}">${data.schemaMarkup ? '✅ Wdrożone' : '❌ Brak'}</span>
         </div>
       </div>
@@ -540,7 +540,8 @@ async function sendEmailReport(email, url, data) {
 
       <div class="loss-section">
         <p class="loss-amount">~${calculateTotalLoss(data).toLocaleString('pl-PL')} zł/mies</p>
-        <p class="loss-sub">Szacowana łączna strata w utraconych wyświetleniach i potencjalnych klientach</p>
+        <p class="loss-sub">Szacowana łączna strata w utraconych wyświetleniach i potencjalnych klientach.</p>
+        <p class="loss-sub">Szacunki oparte o średnie CTR, branżowe benchmarki i dane o zachowaniu użytkowników.</p>
       </div>
 
       <hr class="divider">
@@ -576,7 +577,7 @@ async function sendEmailReport(email, url, data) {
     const { data: emailData, error } = await resend.emails.send({
       from: 'Pomelo SEO/GEO <noreply@seo.pomelo.marketing>',
       to: [email],
-      subject: `${statusEmoji} Wynik: ${data.score}% - ${totalProblems} problemów`,
+      subject: `Audyt SEO/GEO: ${data.score}% — ${totalProblems} wykrytych problemów`,
       html: emailHtml,
     });
 
