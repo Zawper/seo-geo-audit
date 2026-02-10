@@ -497,9 +497,13 @@ async function sendEmailReport(email, url, data) {
 
     <div class="cta">
      
-<a href="https://pomelo.marketing/#raporty?utm_source=email&utm_medium=seo_report&utm_campaign=audit"
-  target="_blank" rel="noopener noreferrer">
-  Zamów pełny raport – 99 zł</a>
+<a 
+  href="https://pomelo.marketing/?utm_source=email&utm_medium=seo_report&utm_campaign=audit#raporty"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Zamów pełny raport – 99 zł
+</a>
       <small>
         30+ metryk • Plan naprawczy • Analiza konkurencji • Wycena wdrożenia<br/>
         Raport gotowy do 7 dni
