@@ -282,6 +282,8 @@ function toggleFAQ(index) {
 function buyFullReport() {
     const email = document.getElementById('userEmailFinal').textContent;
     const url = document.getElementById('resultUrl').textContent;
+    
+}
 
     window.location.href = `mailto:pomelomarketingandsoft@gmail.com?subject=Zamówienie raportu za 99 zł&body=Email: ${encodeURIComponent(email)}%0AStrona: ${encodeURIComponent(url)}`;
 }
@@ -370,11 +372,12 @@ function generateBusinessImpact(data) {
             <div class="space-y-2 text-gray-700">
                 <p class="flex items-center">
                     <span class="text-2xl mr-2">📉</span>
-                    <span>Możesz tracić: <strong class="text-red-600">~${problem.loss} zł/mies</strong></span>
+                    <span>Możesz tracić: <strong class="text-red-600">~${problem.loss} zł/mies*</strong></span>
                 </p>
                 <p class="flex items-center">
                     <span class="text-2xl mr-2">👁️</span>
-                    <span>To: <strong>~${problem.views} wyświetleń miesięcznie</strong></span>
+                    <span>To: <strong>~${problem.views} wyświetleń miesięcznie*</strong></span>
+                    <p class="text-sm text-gray-600 mb-4 italic">* Szacunki oparte o średnie CTR, branżowe benchmarki i dane o zachowaniu użytkowników.</p>
                 </p>
                 <p class="flex items-center">
                     <span class="text-2xl mr-2">⏱️</span>
@@ -407,7 +410,7 @@ function showExitPopup() {
             <div class="text-6xl mb-4">⚠️</div>
             <h3 class="text-2xl font-bold text-gray-800 mb-3">Zaczekaj!</h3>
             <p class="text-gray-600 mb-6">
-                Możesz tracić <strong class="text-red-600">${document.getElementById('monthlyLoss').textContent} zł/mies</strong>
+                Możesz tracić <strong class="text-red-600">${document.getElementById('monthlyLoss').textContent} zł/mies*</strong>
                 przez złą widoczność.
             </p>
             <p class="text-lg font-semibold text-purple-600 mb-6">
@@ -416,7 +419,7 @@ function showExitPopup() {
             <div class="flex flex-col gap-3">
                 <button onclick="buyFullReport(); document.getElementById('exitPopup').remove();"
                         class="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 px-8 rounded-lg transition shadow-lg">
-                    🔥 Kup raport za 99 zł
+                    🔥 Zamów raport
                 </button>
                 <button onclick="document.getElementById('exitPopup').remove();"
                         class="text-gray-500 hover:text-gray-700 text-sm">
