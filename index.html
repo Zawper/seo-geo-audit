@@ -186,7 +186,7 @@
                         <h3 id="visibilityStatus" class="text-4xl md:text-5xl font-bold mb-4">🟡 ŚREDNIA</h3>
                         
                         <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 mt-6 border border-white/20">
-                            <p class="text-2xl font-bold mb-1">⚠️ Możesz tracić ~<span id="monthlyLoss">3,000</span> zł</p>
+                            <p class="text-2xl font-bold mb-1">⚠️ Możesz tracić ~<span id="monthlyLoss">3,000</span> zł*</p>
                             <p class="text-sm opacity-90">miesięcznie w utraconych wyświetleniach</p>
                         </div>
                     </div>
@@ -305,10 +305,12 @@
                         </ul>
                     </div>
                     
-                    <button onclick="buyFullReport()"
-                            class="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition duration-200 transform hover:scale-105 shadow-2xl mb-4">
-                        KUP TERAZ ZA 99 ZŁ
-                    </button>
+                    <a href="https://pomelo.marketing/?utm_source=seo_tool&utm_medium=button&utm_campaign=full_report#raporty"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="block w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-5 px-8 rounded-xl text-xl transition duration-200 transform hover:scale-105 shadow-2xl mb-4 text-center">
+    KUP TERAZ ZA 99 ZŁ
+</a>
                     
                     <div class="flex items-center justify-center gap-6 text-sm text-gray-600">
                         <div class="flex items-center gap-2">
@@ -421,6 +423,19 @@
                     </h3>
                     
                     <div class="space-y-3">
+ <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <button onclick="toggleFAQ(1)" class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition">
+                                <span class="font-semibold text-gray-800 text-left">Kim jesteśmy??</span>
+                                <svg class="w-5 h-5 text-gray-600 transition-transform duration-200 faq-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700 text-sm">
+                             Nie jesteśmy botem zbierającym dane. Nie jesteśmy agencją z biurowcem i 50-osobowym zespołem. Jesteśmy dwójką ludzi, małżeństwem, którzy żyją tym, co robią. Budujemy marketing, który może działać na autopilocie pod nadzorem specjalistów, żebyś mógł skupić się na tym, co ważne. 
+                                Może wpadniesz na <a href="https://pomelo.marketing/#o-nas" class="text-purple-600 hover:underline font-semibold">naszą stronę?</a> 
+                            </div>
+                        </div>
+                        
                         <div class="border border-gray-200 rounded-lg overflow-hidden">
                             <button onclick="toggleFAQ(1)" class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition">
                                 <span class="font-semibold text-gray-800 text-left">Jak szybko zobaczę efekty?</span>
@@ -465,7 +480,7 @@
                                 </svg>
                             </button>
                             <div class="faq-answer hidden p-4 bg-gray-50 text-gray-700 text-sm">
-                                Napisz do nas na <a href="mailto:pomelomarketingandsoft@gmail.com" class="text-purple-600 hover:underline font-semibold">pomelomarketingandsoft@gmail.com</a>
+                               Skontaktuj się z nami za pomocą formularza <a href="https://pomelo.marketing/#kontakt" class="text-purple-600 hover:underline font-semibold">TUTAJ</a>
                             </div>
                         </div>
                     </div>
@@ -473,22 +488,23 @@
 
                 <!-- SEKCJA 8: Final CTA -->
                 <div class="bg-gradient-to-br from-purple-600 via-purple-500 to-pink-600 text-white rounded-2xl p-8 text-center">
-                    <h3 class="text-3xl font-bold mb-4">⚡ NIE TRAĆ WIĘCEJ KLIENTÓW!</h3>
+                    <h3 class="text-3xl font-bold mb-4">Nie trać więcej klientów!</h3>
                     <p class="text-lg mb-6 opacity-90">Zacznij naprawiać swoją widoczność już dziś</p>
                     
                     <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
                         <button onclick="buyFullReport()"
                                 class="bg-white text-purple-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
-                            📊 KUP RAPORT 99 ZŁ
+                            KUP RAPORT 99 ZŁ
                         </button>
                         <button onclick="selectPackage('consultation')"
                                 class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-8 rounded-xl transition transform hover:scale-105 shadow-xl">
-                            📞 KONSULTACJA
+                            KONSULTACJA
                         </button>
                     </div>
                     
                     <p class="text-sm opacity-75">
                         📧 Raport wysłany też na: <span id="userEmailFinal" class="font-semibold">twoj@email.pl</span>
+                        SPRAWDŹ FOLDER SPAM
                     </p>
                 </div>
                 
@@ -498,10 +514,12 @@
 
     <!-- Sticky Mobile CTA -->
     <div id="stickyMobileCTA" class="fixed bottom-0 left-0 right-0 bg-white border-t-2 border-purple-500 p-4 md:hidden shadow-2xl z-40 hidden">
-        <button onclick="buyFullReport()"
-                class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-lg shadow-xl">
-            🔥 KUP RAPORT 99 ZŁ
-        </button>
+        <a href="https://pomelo.marketing/?utm_source=seo_tool&utm_medium=button&utm_campaign=full_report#raporty"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="block w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 rounded-lg shadow-xl text-center">
+    🔥 KUP RAPORT 99 ZŁ
+</a>
     </div>
 
     <script src="app.js"></script>
