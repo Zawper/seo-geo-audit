@@ -306,10 +306,11 @@ async function sendEmailReport(email, url, data) {
       border-bottom: 1px solid #e5e7eb;
     }
     .score {
-      font-size: 42px;
-      font-weight: 700;
-      margin: 0;
-    }
+  font-size: 42px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
     .url {
       font-size: 13px;
       color: #6b7280;
@@ -408,64 +409,90 @@ async function sendEmailReport(email, url, data) {
 <body>
   <div class="container">
 
-    <div class="header">
-      <p class="score">${data.score}%</p>
-      <p class="url">${url}</p>
-      <p class="status">${statusEmoji} Widoczność: ${statusText}</p>
-    </div>
+    <div class="header" style="text-align:center;">
+  <p class="score">${data.score}%</p>
+  <p class="url">${url}</p>
+  <p class="status">${statusEmoji} Widoczność: ${statusText}</p>
+</div>
+
+<div class="loss">
+  ~${calculateTotalLoss(data).toLocaleString('pl-PL')} zł / miesiąc
+  <div style="font-size:13px;color:#6b7280;margin-top:8px;">
+    Szacowana strata w utraconych wyświetleniach i potencjalnych klientach
+  </div>
+</div>
+    <p style="font-size:12px;color:#9ca3af;text-align:center;margin:12px 24px 0;">
+  Szacunki oparte o średnie CTR, branżowe benchmarki i dane o zachowaniu użytkowników.
+</p>
 
     <div class="content">
       <h2>Szczegóły techniczne</h2>
 
-      <div class="row">
-        <span>Szybkość strony</span>
-        <span class="${data.pageSpeed >= 60 ? 'good' : 'bad'}">${data.pageSpeed}/100</span>
-      </div>
-      <div class="row">
-        <span>Czas ładowania</span>
-        <span class="${data.loadTime < 3 ? 'good' : 'bad'}">${data.loadTime}s</span>
-      </div>
-      <div class="row">
-        <span>Mobile-Friendly</span>
-        <span class="${data.mobileFriendly ? 'good' : 'bad'}">${data.mobileFriendly ? 'Tak' : 'Nie'}</span>
-      </div>
-      <div class="row">
-        <span>HTTPS</span>
-        <span class="${data.https ? 'good' : 'bad'}">${data.https ? 'Tak' : 'Nie'}</span>
-      </div>
-      <div class="row">
-        <span>Przystosowanie do AI (ChatGPT)</span>
-        <span class="${data.chatGPTCitation ? 'good' : 'bad'}">${data.chatGPTCitation ? 'Tak' : 'Nie'}</span>
-      </div>
-      <div class="row">
-        <span>Przystosowanie do AI (Gemini)</span>
-        <span class="${data.geminiCitation ? 'good' : 'bad'}">${data.geminiCitation ? 'Tak' : 'Nie'}</span>
-      </div>
-      <div class="row">
-        <span>Schema Markup</span>
-        <span class="${data.schemaMarkup ? 'good' : 'bad'}">${data.schemaMarkup ? 'Wdrożone' : 'Brak'}</span>
-      </div>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;">
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">Szybkość strony</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.pageSpeed >= 60 ? '#059669' : '#dc2626'};">
+      ${data.pageSpeed}/100
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">Czas ładowania</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.loadTime < 3 ? '#059669' : '#dc2626'};">
+      ${data.loadTime}s
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">Mobile-Friendly</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.mobileFriendly ? '#059669' : '#dc2626'};">
+      ${data.mobileFriendly ? 'Tak' : 'Nie'}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">HTTPS</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.https ? '#059669' : '#dc2626'};">
+      ${data.https ? 'Tak' : 'Nie'}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">Przystosowanie do AI (ChatGPT)</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.chatGPTCitation ? '#059669' : '#dc2626'};">
+      ${data.chatGPTCitation ? 'Tak' : 'Nie'}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;border-bottom:1px solid #e5e7eb;">Przystosowanie do AI (Gemini)</td>
+    <td align="right" style="padding:8px 0;border-bottom:1px solid #e5e7eb;font-weight:600;color:${data.geminiCitation ? '#059669' : '#dc2626'};">
+      ${data.geminiCitation ? 'Tak' : 'Nie'}
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:8px 0;">Schema Markup</td>
+    <td align="right" style="padding:8px 0;font-weight:600;color:${data.schemaMarkup ? '#059669' : '#dc2626'};">
+      ${data.schemaMarkup ? 'Wdrożone' : 'Brak'}
+    </td>
+  </tr>
+</table>
 
       ${totalProblems > 0 ? `
       <h2 style="margin-top:32px;">Wykryte problemy (${totalProblems})</h2>
       ${!data.pageSpeed || data.pageSpeed < 60 ? `
         <div class="problem">
           <div class="problem-title">Wolne ładowanie strony</div>
-          <div class="problem-desc">Strona ładuje się wolniej niż zalecane standardy Google.</div>
+          <div class="problem-desc">Strona ładuje się wolniej niż zalecane standardy Google. Powoduje to wyższy współczynnik odrzuceń.
+    Użytkownicy opuszczają stronę zanim zobaczą ofertę, a Google obniża jej pozycję
+    w wynikach wyszukiwania.</div>
           <div class="problem-meta"><strong>Naprawa:</strong> 1–2 tygodnie</div>
         </div>` : ''}
       ${!data.chatGPTCitation || !data.geminiCitation ? `
         <div class="problem">
           <div class="problem-title">Niska gotowość strony do AI</div>
-          <div class="problem-desc">Strona nie jest w pełni przygotowana do cytowań i interpretacji przez systemy AI.</div>
+          <div class="problem-desc">Strona nie jest w pełni przygotowana do cytowań i interpretacji przez systemy AI. To oznacza mniejszą szansę na pojawienie się
+    w odpowiedziach generowanych przez systemy AI (np. ChatGPT, Gemini),
+    z których codziennie korzystają miliony użytkowników.</div>
           <div class="problem-meta"><strong>Naprawa:</strong> 2–3 tygodnie</div>
         </div>` : ''}
       ` : ''}
 
-    </div>
-
-    <div class="loss">
-      ~${calculateTotalLoss(data).toLocaleString('pl-PL')} zł / miesiąc
     </div>
 
     <div class="cta">
